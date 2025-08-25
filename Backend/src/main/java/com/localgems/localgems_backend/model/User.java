@@ -8,22 +8,23 @@ import jakarta.persistence.*;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long user_id;
+    @Column(name = "user_id")
+    private Long userId;
 
-    @Column(name = "username", nullable = false, unique = true)
+    @Column(nullable = false, unique = true)
     private String username;
 
-    @Column(name = "email", nullable = false, unique = true)
+    @Column( nullable = false, unique = true)
     private String email;
 
-    @Column(name = "password", nullable = false)
+    @Column( nullable = false)
     private String password;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "role", nullable = false)
+    @Column( nullable = false)
     private Role role;
 
-    @Column(name = "date created", nullable = false)
+    @Column(name = "date_created", nullable = false)
     private LocalDateTime dateCreated;
 
     @PrePersist
@@ -33,11 +34,11 @@ public class User {
 
     // Getters and Setters
     public Long getUser_id() {
-        return user_id;
+        return userId;
     }
 
-    public void setUser_id(Long user_id) {
-        this.user_id = user_id;
+    public void setUser_id(Long userId) {
+        this.userId = userId;
     }
 
     public String getUsername() {
