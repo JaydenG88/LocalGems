@@ -1,5 +1,5 @@
 package com.localgems.localgems_backend.model;
 
-public class Region {
+public class Category {
     
 }

@@ -5,10 +5,12 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "businesses")
 public class Business {
-    @Id
+        @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "business_id")
     private Long businessId;
+
+    @Column(nullable = false, unique = true)
+    private String googlePlaceId;
 
     @Column(nullable = false)
     private String name;
@@ -16,33 +18,21 @@ public class Business {
     @Column(nullable = false)
     private String address;
 
-    @Column(nullable = false)
-    private String state;
+    @ManyToOne
+    @JoinColumn(name = "city_id", nullable = false)
+    private City city;
 
-    @Column(nullable = false)
-    private String city;
+    @ManyToOne
+    @JoinColumn(name = "category_id", nullable = false)
+    private Category category;
 
-    @Column(nullable = false)
     private Double latitude;
-    
-    @Column(nullable = false)
     private Double longitude;
-
-    @Column(nullable = false)
     private String description;
-
-    @Column(nullable = false)
-    private String category;
-
-    @Column(nullable = false)
     private LocalDateTime dateAdded;
-
-    @Column(nullable = false)
     private String website;
-
-    @Column(name = "image_url",nullable = false)
     private String imageUrl;
-    
+
     // Getters and Setters
     public Long getBusinessId() {
         return businessId;
@@ -68,19 +58,11 @@ public class Business {
         this.address = address;
     }
 
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public String getCity() {
+    public City getCity() {
         return city;
     }
 
-    public void setCity(String city) {
+    public void setCity(City city) {
         this.city = city;
     }
 
@@ -108,11 +90,11 @@ public class Business {
         this.description = description;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 
@@ -123,7 +105,7 @@ public class Business {
     public void setDateAdded(LocalDateTime dateAdded) {
         this.dateAdded = dateAdded;
     }
-    
+
     public String getWebsite() {
         return website;
     }

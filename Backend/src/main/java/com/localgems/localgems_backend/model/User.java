@@ -8,23 +8,22 @@ import jakarta.persistence.*;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
-    private Long userId;
+    private Long userId;  // will default to "userId" -> "user_id" if you use Hibernate's naming strategy
 
     @Column(nullable = false, unique = true)
     private String username;
 
-    @Column( nullable = false, unique = true)
+    @Column(nullable = false, unique = true)
     private String email;
 
-    @Column( nullable = false)
+    @Column(nullable = false)
     private String password;
 
     @Enumerated(EnumType.STRING)
-    @Column( nullable = false)
+    @Column(nullable = false)
     private Role role;
 
-    @Column(name = "date_created", nullable = false)
+    @Column(name = "date_created")
     private LocalDateTime dateCreated;
 
     @PrePersist
