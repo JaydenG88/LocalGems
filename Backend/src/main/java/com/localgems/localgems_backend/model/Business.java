@@ -1,6 +1,8 @@
 package com.localgems.localgems_backend.model;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "businesses")
@@ -22,9 +24,13 @@ public class Business {
     @JoinColumn(name = "city_id", nullable = false)
     private City city;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id", nullable = false)
-    private Category category;
+    @ManyToMany
+    @JoinTable(
+        name = "business_categories",
+        joinColumns = @JoinColumn(name = "business_id"),
+        inverseJoinColumns = @JoinColumn(name = "category_id")
+        )    
+    private List<Category> categories = new ArrayList<>();
 
     private Double latitude;
     private Double longitude;
@@ -90,12 +96,12 @@ public class Business {
         this.description = description;
     }
 
-    public Category getCategory() {
-        return category;
+    public List<Category> getCategories() {
+        return categories;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCategory(List<Category> categories) {
+        this.categories = categories;
     }
 
     public LocalDateTime getDateAdded() {
