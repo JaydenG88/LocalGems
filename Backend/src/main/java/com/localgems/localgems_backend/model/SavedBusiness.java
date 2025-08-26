@@ -44,4 +44,17 @@ public class SavedBusiness {
         return this.user;
     }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Business getBusiness() {
+        return this.business;
+    }
+
+    public void setBusiness(Business business) {
+        this.business = business;
+    }
+    
+
 }
