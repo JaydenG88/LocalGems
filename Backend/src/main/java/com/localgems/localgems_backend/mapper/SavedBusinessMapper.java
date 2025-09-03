@@ -1,0 +1,16 @@
+package com.localgems.localgems_backend.mapper;
+import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
+import com.localgems.localgems_backend.model.SavedBusiness;
+import com.localgems.localgems_backend.dto.SavedBusinessRequestDTO;
+
+@Mapper(componentModel = "spring")
+public interface SavedBusinessMapper {
+    
+    public static final SavedBusinessMapper INSTANCE = Mappers.getMapper(SavedBusinessMapper.class);
+
+    SavedBusiness dtoToEntity(SavedBusinessRequestDTO dto);
+
+    SavedBusinessRequestDTO entityToDto(SavedBusiness savedBusiness);
+    
+}
