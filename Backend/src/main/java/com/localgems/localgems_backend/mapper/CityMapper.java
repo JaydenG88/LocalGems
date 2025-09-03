@@ -1,6 +1,7 @@
 package com.localgems.localgems_backend.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
+import org.mapstruct.MappingTarget;
 import com.localgems.localgems_backend.model.City;
 import com.localgems.localgems_backend.dto.CityRequestDTO;
 import com.localgems.localgems_backend.dto.CityResponseDTO;
@@ -13,5 +14,7 @@ public interface CityMapper {
     City dtoToEntity(CityRequestDTO dto);
 
     CityResponseDTO entityToDto(City city);
+
+    void updateEntityFromDto(CityRequestDTO dto, @MappingTarget City entity);
     
 }

@@ -1,6 +1,7 @@
 package com.localgems.localgems_backend.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
+import org.mapstruct.MappingTarget;
 import com.localgems.localgems_backend.model.SavedBusiness;
 import com.localgems.localgems_backend.dto.SavedBusinessRequestDTO;
 
@@ -12,5 +13,6 @@ public interface SavedBusinessMapper {
     SavedBusiness dtoToEntity(SavedBusinessRequestDTO dto);
 
     SavedBusinessRequestDTO entityToDto(SavedBusiness savedBusiness);
-    
+
+    void updateEntityFromDto(SavedBusinessRequestDTO dto, @MappingTarget SavedBusiness entity);
 }

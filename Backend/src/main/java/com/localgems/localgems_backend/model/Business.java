@@ -100,7 +100,7 @@ public class Business {
         return categories;
     }
 
-    public void setCategory(List<Category> categories) {
+    public void setCategories(List<Category> categories) {
         this.categories = categories;
     }
 

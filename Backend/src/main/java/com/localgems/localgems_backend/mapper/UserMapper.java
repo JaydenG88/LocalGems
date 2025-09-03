@@ -1,6 +1,7 @@
 package com.localgems.localgems_backend.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
+import org.mapstruct.MappingTarget;
 import com.localgems.localgems_backend.model.User;
 import com.localgems.localgems_backend.dto.UserRequestDTO;
 import com.localgems.localgems_backend.dto.UserResponseDTO;
@@ -13,5 +14,7 @@ public interface UserMapper {
     User dtoToEntity(UserRequestDTO dto);
 
     UserResponseDTO entityToDto(User user);
+    
+    void updateEntityFromDto(UserRequestDTO dto, @MappingTarget User entity);
 
 }
