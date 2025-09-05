@@ -38,7 +38,7 @@ public class BusinessService {
             List<Category> categories = categoryRepository.findAllById(businessRequestDTO.getCategoryIds());
             business.setCategories(categories);
         }
-        
+
         Business savedBusiness = businessRepository.save(business);
         return businessMapper.entityToDto(savedBusiness);
     }
@@ -80,6 +80,8 @@ public class BusinessService {
     public void deleteBusiness(Long id) {
         if (businessRepository.existsById(id)) {
             businessRepository.deleteById(id);
+        } else {
+            throw new NoSuchElementException("Business not found with id: " + id);
         }
     }
 
