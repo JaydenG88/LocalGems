@@ -17,10 +17,10 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
-    public Category createCategory (CategoryRequestDTO categoryRequestDTO) {
+    public CategoryResponseDTO createCategory (CategoryRequestDTO categoryRequestDTO) {
         Category category = categoryMapper.dtoToEntity(categoryRequestDTO);
         Category savedCategory = categoryRepository.save(category);
-        return savedCategory;
+        return categoryMapper.entityToDto(savedCategory);
     }
 
     public List<CategoryResponseDTO> getAllCategories() {

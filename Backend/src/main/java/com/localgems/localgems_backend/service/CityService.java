@@ -18,10 +18,10 @@ public class CityService {
 
     }
 
-    public City createCity(CityRequestDTO cityRequestDTO) {
+    public CityResponseDTO createCity(CityRequestDTO cityRequestDTO) {
         City city = cityMapper.dtoToEntity(cityRequestDTO);
         City savedCity = cityRepository.save(city);
-        return savedCity;
+        return cityMapper.entityToDto(savedCity);
     }
 
     public List<CityResponseDTO> getAllCities() {
