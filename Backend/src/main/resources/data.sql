@@ -74,3 +74,6 @@ INSERT INTO saved_businesses (saved_business_id, user_id, business_id, saved_at)
 (8, 3, 1, '2023-01-10T15:00:00'),
 (9, 4, 2, '2023-01-11T11:30:00'),
 (10, 5, 6, '2023-01-12T18:00:00');
+
+-- Reset the sequence so new inserts get the correct next ID
+SELECT setval('businesses_business_id_seq', (SELECT MAX(business_id) FROM businesses));

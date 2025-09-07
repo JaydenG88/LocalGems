@@ -7,7 +7,7 @@ import java.util.List;
 @Entity
 @Table(name = "businesses")
 public class Business {
-        @Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long businessId;
 
@@ -137,6 +137,15 @@ public class Business {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
+
+    public String getGooglePlaceId() {
+        return googlePlaceId;
+    }
+
+    public void setGooglePlaceId(String googlePlaceId) {
+        this.googlePlaceId = googlePlaceId;
+    }
+
 
 
 }
