@@ -14,7 +14,7 @@ import com.localgems.localgems_backend.dto.ReviewRequestDTO;
 import com.localgems.localgems_backend.dto.ReviewResponseDTO;
 import java.util.*;
 
-
+@Service
 public class ReviewService {
     
     private final ReviewRepository reviewRepository;

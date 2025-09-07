@@ -7,7 +7,7 @@ import com.localgems.localgems_backend.mapper.CityMapper;
 import com.localgems.localgems_backend.repository.CityRepository;
 import java.util.*;
 
-
+@Service
 public class CityService {
     private final CityRepository cityRepository;
     private final CityMapper cityMapper;
