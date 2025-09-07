@@ -2,5 +2,6 @@ package com.localgems.localgems_backend.model;
 
 public enum Role {
     USER,
-    ADMIN
+    ADMIN,
+    BUSINESS_OWNER
 }

@@ -28,6 +28,11 @@ public class Review {
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
+    @PreUpdate
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
+
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 

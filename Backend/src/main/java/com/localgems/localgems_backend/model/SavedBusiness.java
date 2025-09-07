@@ -15,6 +15,11 @@ public class SavedBusiness {
     @Column(name = "saved_at", nullable = false, updatable = false)
     private LocalDateTime savedAt = LocalDateTime.now();
 
+    @PreUpdate
+    protected void onCreate() {
+        this.savedAt = LocalDateTime.now();
+    }
+    
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;

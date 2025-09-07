@@ -11,7 +11,7 @@ public class Business {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long businessId;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, name = "google_place_id")
     private String googlePlaceId;
 
     @Column(nullable = false)
@@ -35,8 +35,18 @@ public class Business {
     private Double latitude;
     private Double longitude;
     private String description;
+
+    @Column(name = "date_added", nullable = false)
     private LocalDateTime dateAdded;
+
+    @PrePersist
+        protected void onCreate() {
+        this.dateAdded = LocalDateTime.now();
+    }
+    
     private String website;
+
+    @Column(name = "image_url")
     private String imageUrl;
 
     // Getters and Setters

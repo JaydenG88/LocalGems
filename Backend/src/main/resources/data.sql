@@ -18,7 +18,7 @@ INSERT INTO categories (category_id, name) VALUES
 (8, 'Boutique');
 
 -- Businesses
-INSERT INTO businesses (business_id, googlePlaceId, name, address, city_id, latitude, longitude, description, dateAdded, website, imageUrl) VALUES
+INSERT INTO businesses (business_id, google_place_id, name, address, city_id, latitude, longitude, description, date_added, website, image_url) VALUES
 (1, 'gpid1', 'Golden Gate Eats', '123 Market St', 1, 37.7749, -122.4194, 'A great place in SF', '2023-01-01T10:00:00', 'http://goldengateeats.com', 'http://img.com/gge.jpg'),
 (2, 'gpid2', 'Central Perk', '456 Broadway', 2, 40.7128, -74.0060, 'Famous coffee shop', '2023-01-02T11:00:00', 'http://centralperk.com', 'http://img.com/cp.jpg'),
 (3, 'gpid3', 'Emerald City Books', '789 Pike St', 3, 47.6062, -122.3321, 'Cozy independent bookstore', '2023-01-03T09:30:00', 'http://emeraldcitybooks.com', 'http://img.com/ecb.jpg'),
