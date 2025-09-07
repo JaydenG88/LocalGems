@@ -30,6 +30,12 @@
 		<java.version>17</java.version>
 	</properties>
 <dependencies>
+
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-actuator</artifactId>
+    </dependency>
+
     <!-- Spring Boot Starter Web (REST APIs) -->
     <dependency>
         <groupId>org.springframework.boot</groupId>
@@ -61,12 +67,14 @@
         <artifactId>jjwt-api</artifactId>
         <version>0.11.5</version>
     </dependency>
+
     <dependency>
         <groupId>io.jsonwebtoken</groupId>
         <artifactId>jjwt-impl</artifactId>
         <version>0.11.5</version>
         <scope>runtime</scope>
     </dependency>
+
     <dependency>
         <groupId>io.jsonwebtoken</groupId>
         <artifactId>jjwt-jackson</artifactId>
@@ -108,6 +116,14 @@
         <artifactId>mapstruct</artifactId>
         <version>1.5.5.Final</version>
     </dependency>
+
+    <dependency>
+        <groupId>org.mapstruct</groupId>
+        <artifactId>mapstruct-processor</artifactId>
+        <version>1.5.5.Final</version>
+        <scope>provided</scope>
+    </dependency>
+
 </dependencies>
 
 
