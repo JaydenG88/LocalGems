@@ -4,6 +4,7 @@ import org.mapstruct.factory.Mappers;
 import org.mapstruct.MappingTarget;
 import com.localgems.localgems_backend.model.SavedBusiness;
 import com.localgems.localgems_backend.dto.SavedBusinessRequestDTO;
+import com.localgems.localgems_backend.dto.SavedBusinessResponseDTO;
 
 @Mapper(componentModel = "spring")
 public interface SavedBusinessMapper {
@@ -12,7 +13,7 @@ public interface SavedBusinessMapper {
 
     SavedBusiness dtoToEntity(SavedBusinessRequestDTO dto);
 
-    SavedBusinessRequestDTO entityToDto(SavedBusiness savedBusiness);
+    SavedBusinessResponseDTO entityToDto(SavedBusiness savedBusiness);
 
     void updateEntityFromDto(SavedBusinessRequestDTO dto, @MappingTarget SavedBusiness entity);
 }
