@@ -9,8 +9,8 @@ LocalGems aims to be a platform where users can easily share and discover local 
 - User ability to submit a local business
   - Moderated using OpenAI's API to ensure its a business and local/niche
 - Business search functionality
- - Search by category, city, ratings, and name
- - Google Maps API for a search map
+  - Search by category, city, ratings, and name
+  - Google Maps API for a search map
 - Users leaving reviews and ratings for businesses
 - Users being able to save businesses  
 
