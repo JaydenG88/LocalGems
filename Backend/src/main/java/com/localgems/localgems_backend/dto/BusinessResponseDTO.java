@@ -9,6 +9,7 @@ public class BusinessResponseDTO {
     private String address;
     private Long cityId;
     private String cityName; 
+    private List<Long> categoryIds;
     private List<String> categoryNames;
     private Double latitude;
     private Double longitude;
@@ -56,6 +57,12 @@ public class BusinessResponseDTO {
     }
     public List<String> getCategoryNames() {
         return categoryNames;
+    }
+    public void setCategoryIds(List<Long> categoryIds) {
+        this.categoryIds = categoryIds;
+    }
+    public List<Long> getCategoryIds() {
+        return categoryIds;
     }
     public void setCategoryNames(List<String> categoryNames) {
         this.categoryNames = categoryNames;
