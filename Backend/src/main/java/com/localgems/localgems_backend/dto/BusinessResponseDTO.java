@@ -1,6 +1,7 @@
 package com.localgems.localgems_backend.dto;
 import java.util.List;
 import java.time.LocalDateTime;
+import com.localgems.localgems_backend.dto.CategoryResponseDTO;
 
 public class BusinessResponseDTO {
     private Long businessId;
@@ -9,8 +10,7 @@ public class BusinessResponseDTO {
     private String address;
     private Long cityId;
     private String cityName; 
-    private List<Long> categoryIds;
-    private List<String> categoryNames;
+    private List<CategoryResponseDTO> categories;
     private Double latitude;
     private Double longitude;
     private String description;
@@ -55,17 +55,11 @@ public class BusinessResponseDTO {
     public void setCityId(Long cityId) {
         this.cityId = cityId;
     }
-    public List<String> getCategoryNames() {
-        return categoryNames;
+    public void setCategories(List<CategoryResponseDTO> categories) {
+        this.categories = categories;
     }
-    public void setCategoryIds(List<Long> categoryIds) {
-        this.categoryIds = categoryIds;
-    }
-    public List<Long> getCategoryIds() {
-        return categoryIds;
-    }
-    public void setCategoryNames(List<String> categoryNames) {
-        this.categoryNames = categoryNames;
+    public List<CategoryResponseDTO> getCategories() {
+        return categories;
     }
     public Double getLatitude() {
         return latitude;

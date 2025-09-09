@@ -6,6 +6,7 @@ import org.mapstruct.MappingTarget;
 import com.localgems.localgems_backend.model.Business;
 import com.localgems.localgems_backend.dto.BusinessRequestDTO;
 import com.localgems.localgems_backend.dto.BusinessResponseDTO;
+import com.localgems.localgems_backend.dto.CategoryResponseDTO;
 
 @Mapper(componentModel = "spring")
 public interface BusinessMapper {
@@ -17,7 +18,8 @@ public interface BusinessMapper {
     @Mapping(source = "city.name", target = "cityName")
     @Mapping(source = "city.cityId", target = "cityId")
     BusinessResponseDTO entityToDto(Business business);
+    CategoryResponseDTO categoryToDto(CategoryResponseDTO category);
 
     void updateEntityFromDto(BusinessRequestDTO dto, @MappingTarget Business entity);
-
+    
 }
