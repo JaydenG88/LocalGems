@@ -1,6 +1,7 @@
 package com.localgems.localgems_backend.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import com.localgems.localgems_backend.model.Review;
 import com.localgems.localgems_backend.dto.ReviewRequestDTO;
@@ -13,6 +14,10 @@ public interface ReviewMapper {
 
     Review dtoToEntity(ReviewRequestDTO dto);
 
+    @Mapping(source = "user.username", target = "username")
+    @Mapping(source = "user.userId", target = "userId")
+    @Mapping(source = "business.name", target = "businessName")
+    @Mapping(source = "business.businessId", target = "businessId")
     ReviewResponseDTO entityToDto(Review review);
     
     void updateEntityFromDto(ReviewRequestDTO dto, @MappingTarget Review entity);

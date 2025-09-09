@@ -7,8 +7,10 @@ public class ReviewResponseDTO {
     private long reviewId;
     private int rating;
     private String description;
-    private String userName;
+    private String username;
+    private Long businessId;
     private String businessName;
+    private Long userId;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     
@@ -31,17 +33,29 @@ public class ReviewResponseDTO {
     public void setDescription(String description) {
         this.description = description;
     }   
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
+    }
+    public Long getUserId() {
+        return userId;
+    }
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
     public String getBusinessName() {
         return businessName;
     }
     public void setBusinessName(String businessName) {
         this.businessName = businessName;
+    }
+    public Long getBusinessId() {
+        return businessId;
+    }
+    public void setBusinessId(Long businessId) {
+        this.businessId = businessId;
     }
     public LocalDateTime getCreatedAt() {
         return createdAt;

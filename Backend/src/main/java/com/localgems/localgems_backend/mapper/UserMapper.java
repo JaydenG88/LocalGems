@@ -1,5 +1,6 @@
 package com.localgems.localgems_backend.mapper;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 import org.mapstruct.MappingTarget;
 import com.localgems.localgems_backend.model.User;
