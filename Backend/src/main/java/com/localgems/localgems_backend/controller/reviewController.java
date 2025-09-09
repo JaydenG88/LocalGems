@@ -2,6 +2,7 @@
 
 package com.localgems.localgems_backend.controller;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -16,6 +17,7 @@ import com.localgems.localgems_backend.dto.ReviewResponseDTO;
 import java.util.*;
 
 @RestController
+@RequestMapping("/api/reviews")
 public class ReviewController {
 	private final ReviewService reviewService;
 
@@ -23,26 +25,26 @@ public class ReviewController {
 		this.reviewService = reviewService;
 	}
 
-	@GetMapping("/reviews")
+	@GetMapping
 	public ResponseEntity<List<ReviewResponseDTO>> getAllReviews() {
 		List<ReviewResponseDTO> reviews = reviewService.getAllReviews();
 		return new ResponseEntity<>(reviews, HttpStatus.OK);
 	}
 
-	@GetMapping("/reviews/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<ReviewResponseDTO> getReviewById(@PathVariable Long id) {
 		Optional<ReviewResponseDTO> reviewOpt = reviewService.getReviewById(id);
 		return reviewOpt.map(review -> new ResponseEntity<>(review, HttpStatus.OK))
 						.orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
 	}
 
-	@PostMapping("/reviews")
+	@PostMapping
 	public ResponseEntity<ReviewResponseDTO> createReview(@RequestBody ReviewRequestDTO reviewRequestDTO) {
 		ReviewResponseDTO createdReview = reviewService.createReview(reviewRequestDTO);
 		return new ResponseEntity<>(createdReview, HttpStatus.CREATED);
 	}
 
-	@PutMapping("/reviews/{id}")
+	@PutMapping("/{id}")
 	public ResponseEntity<ReviewResponseDTO> updateReview(@PathVariable Long id, @RequestBody ReviewRequestDTO reviewRequestDTO) {
 		try {
 			ReviewResponseDTO updatedReview = reviewService.updateReview(id, reviewRequestDTO);
@@ -52,7 +54,7 @@ public class ReviewController {
 		}
 	}
 
-	@DeleteMapping("/reviews/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deleteReview(@PathVariable Long id) {
 		try {
 			reviewService.deleteReview(id);

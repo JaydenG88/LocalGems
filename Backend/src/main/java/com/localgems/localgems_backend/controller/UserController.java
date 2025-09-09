@@ -2,6 +2,7 @@
 
 package com.localgems.localgems_backend.controller;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -16,6 +17,7 @@ import com.localgems.localgems_backend.dto.UserResponseDTO;
 import java.util.*;
 
 @RestController
+@RequestMapping("/api/users")
 public class UserController {
 	private final UserService userService;
 
@@ -23,26 +25,26 @@ public class UserController {
 		this.userService = userService;
 	}
 
-	@GetMapping("/users")
+	@GetMapping
 	public ResponseEntity<List<UserResponseDTO>> getAllUsers() {
 		List<UserResponseDTO> users = userService.getAllUsers();
 		return new ResponseEntity<>(users, HttpStatus.OK);
 	}
 
-	@GetMapping("/users/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<UserResponseDTO> getUserById(@PathVariable Long id) {
 		Optional<UserResponseDTO> userOpt = userService.getUserById(id);
 		return userOpt.map(user -> new ResponseEntity<>(user, HttpStatus.OK))
 					  .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
 	}
 
-	@PostMapping("/users")
+	@PostMapping
 	public ResponseEntity<UserResponseDTO> createUser(@RequestBody UserRequestDTO userRequestDTO) {
 		UserResponseDTO createdUser = userService.createUser(userRequestDTO);
 		return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
 	}
 
-	@PutMapping("/users/{id}")
+	@PutMapping("/{id}")
 	public ResponseEntity<UserResponseDTO> updateUser(@PathVariable Long id, @RequestBody UserRequestDTO userRequestDTO) {
 		try {
 			UserResponseDTO updatedUser = userService.updateUser(id, userRequestDTO);
@@ -52,7 +54,7 @@ public class UserController {
 		}
 	}
 
-	@DeleteMapping("/users/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
 		try {
 			userService.deleteUser(id);
