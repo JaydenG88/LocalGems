@@ -7,6 +7,7 @@ public class BusinessResponseDTO {
     private String googlePlaceId;
     private String name;
     private String address;
+    private Long cityId;
     private String cityName; 
     private List<String> categoryNames;
     private Double latitude;
@@ -46,6 +47,12 @@ public class BusinessResponseDTO {
     }
     public void setCityName(String cityName) {
         this.cityName = cityName;
+    }
+    public Long getCityId() {
+        return cityId;
+    }
+    public void setCityId(Long cityId) {
+        this.cityId = cityId;
     }
     public List<String> getCategoryNames() {
         return categoryNames;
