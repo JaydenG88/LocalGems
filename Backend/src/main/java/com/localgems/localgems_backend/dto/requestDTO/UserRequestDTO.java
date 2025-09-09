@@ -1,18 +1,12 @@
-package com.localgems.localgems_backend.dto;
+package com.localgems.localgems_backend.dto.requestDTO;
 
-public class UserResponseDTO {
-    private Long userId;
+public class UserRequestDTO {
     private String username;
     private String email;
+    private String password;
     private String role;
 
     // Getters and Setters
-    public Long getUserId() {
-        return userId;
-    }   
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }   
     public String getUsername() {
         return username;
     }
@@ -24,6 +18,12 @@ public class UserResponseDTO {
     }
     public void setEmail(String email) {
         this.email = email;
+    }
+    public String getPassword() {
+        return password;
+    }
+    public void setPassword(String password) {
+        this.password = password;
     }
     public String getRole() {
         return role;

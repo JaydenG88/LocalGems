@@ -1,8 +1,8 @@
 package com.localgems.localgems_backend.service;
 import org.springframework.stereotype.Service;
 import com.localgems.localgems_backend.model.City;
-import com.localgems.localgems_backend.dto.CityRequestDTO;
-import com.localgems.localgems_backend.dto.CityResponseDTO;
+import com.localgems.localgems_backend.dto.requestDTO.CityRequestDTO;
+import com.localgems.localgems_backend.dto.responseDTO.CityResponseDTO;
 import com.localgems.localgems_backend.mapper.CityMapper;
 import com.localgems.localgems_backend.repository.CityRepository;
 import java.util.*;

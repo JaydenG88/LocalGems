@@ -7,8 +7,9 @@ import com.localgems.localgems_backend.repository.SavedBusinessRepository;
 import com.localgems.localgems_backend.repository.BusinessRepository;
 import com.localgems.localgems_backend.repository.UserRepository;
 import com.localgems.localgems_backend.mapper.SavedBusinessMapper;
-import com.localgems.localgems_backend.dto.SavedBusinessRequestDTO;
-import com.localgems.localgems_backend.dto.SavedBusinessResponseDTO;
+import com.localgems.localgems_backend.dto.requestDTO.SavedBusinessRequestDTO;
+import com.localgems.localgems_backend.dto.responseDTO.SavedBusinessResponseDTO;
+
 import java.util.*;
 
 @Service

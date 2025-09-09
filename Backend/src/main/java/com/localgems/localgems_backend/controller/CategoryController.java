@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.http.ResponseEntity;
 import com.localgems.localgems_backend.service.CategoryService;
-import com.localgems.localgems_backend.dto.CategoryRequestDTO;
-import com.localgems.localgems_backend.dto.CategoryResponseDTO;
+import com.localgems.localgems_backend.dto.requestDTO.CategoryRequestDTO;
+import com.localgems.localgems_backend.dto.responseDTO.CategoryResponseDTO;
+
 import org.springframework.http.HttpStatus;
 import java.util.*;
 

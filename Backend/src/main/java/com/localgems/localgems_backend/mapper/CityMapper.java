@@ -3,8 +3,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 import org.mapstruct.MappingTarget;
 import com.localgems.localgems_backend.model.City;
-import com.localgems.localgems_backend.dto.CityRequestDTO;
-import com.localgems.localgems_backend.dto.CityResponseDTO;
+import com.localgems.localgems_backend.dto.requestDTO.CityRequestDTO;
+import com.localgems.localgems_backend.dto.responseDTO.CityResponseDTO;
 
 @Mapper(componentModel = "spring")
 public interface CityMapper {

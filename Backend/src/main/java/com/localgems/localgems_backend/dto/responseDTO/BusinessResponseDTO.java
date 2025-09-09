@@ -1,7 +1,6 @@
-package com.localgems.localgems_backend.dto;
+package com.localgems.localgems_backend.dto.responseDTO;
 import java.util.List;
 import java.time.LocalDateTime;
-import com.localgems.localgems_backend.dto.CategoryResponseDTO;
 
 public class BusinessResponseDTO {
     private Long businessId;

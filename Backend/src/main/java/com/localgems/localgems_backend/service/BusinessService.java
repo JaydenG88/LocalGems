@@ -7,8 +7,9 @@ import com.localgems.localgems_backend.repository.CityRepository;
 import com.localgems.localgems_backend.model.Category;
 import com.localgems.localgems_backend.repository.CategoryRepository;
 import com.localgems.localgems_backend.mapper.BusinessMapper;
-import com.localgems.localgems_backend.dto.BusinessRequestDTO;
-import com.localgems.localgems_backend.dto.BusinessResponseDTO;
+import com.localgems.localgems_backend.dto.requestDTO.BusinessRequestDTO;
+import com.localgems.localgems_backend.dto.responseDTO.BusinessResponseDTO;
+
 import java.util.*;
 
 @Service

@@ -3,8 +3,9 @@ import org.springframework.stereotype.Service;
 import com.localgems.localgems_backend.model.User;
 import com.localgems.localgems_backend.repository.UserRepository;
 import com.localgems.localgems_backend.mapper.UserMapper;
-import com.localgems.localgems_backend.dto.UserRequestDTO;
-import com.localgems.localgems_backend.dto.UserResponseDTO;
+import com.localgems.localgems_backend.dto.requestDTO.UserRequestDTO;
+import com.localgems.localgems_backend.dto.responseDTO.UserResponseDTO;
+
 import java.util.*;
 
 @Service

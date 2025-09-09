@@ -12,8 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import com.localgems.localgems_backend.service.UserService;
-import com.localgems.localgems_backend.dto.UserRequestDTO;
-import com.localgems.localgems_backend.dto.UserResponseDTO;
+import com.localgems.localgems_backend.dto.requestDTO.UserRequestDTO;
+import com.localgems.localgems_backend.dto.responseDTO.UserResponseDTO;
+
 import java.util.*;
 
 @RestController

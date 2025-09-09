@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import com.localgems.localgems_backend.service.ReviewService;
-import com.localgems.localgems_backend.dto.ReviewRequestDTO;
-import com.localgems.localgems_backend.dto.ReviewResponseDTO;
+import com.localgems.localgems_backend.dto.requestDTO.ReviewRequestDTO;
+import com.localgems.localgems_backend.dto.responseDTO.ReviewResponseDTO;
+import com.localgems.localgems_backend.dto.updateDTO.ReviewUpdateDTO;
+
 import java.util.*;
 
 @RestController
@@ -45,9 +47,9 @@ public class ReviewController {
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<ReviewResponseDTO> updateReview(@PathVariable Long id, @RequestBody ReviewRequestDTO reviewRequestDTO) {
+	public ResponseEntity<ReviewResponseDTO> updateReview(@PathVariable Long id, @RequestBody ReviewUpdateDTO reviewUpdateDTO) {
 		try {
-			ReviewResponseDTO updatedReview = reviewService.updateReview(id, reviewRequestDTO);
+			ReviewResponseDTO updatedReview = reviewService.updateReview(id, reviewUpdateDTO);
 			return new ResponseEntity<>(updatedReview, HttpStatus.OK);
 		} catch (NoSuchElementException e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

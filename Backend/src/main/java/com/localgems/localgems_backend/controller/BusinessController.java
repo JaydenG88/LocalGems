@@ -10,8 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import com.localgems.localgems_backend.service.BusinessService;
-import com.localgems.localgems_backend.dto.BusinessRequestDTO;
-import com.localgems.localgems_backend.dto.BusinessResponseDTO;
+import com.localgems.localgems_backend.dto.requestDTO.BusinessRequestDTO;
+import com.localgems.localgems_backend.dto.responseDTO.BusinessResponseDTO;
+
 import java.util.*;
 
 @RestController

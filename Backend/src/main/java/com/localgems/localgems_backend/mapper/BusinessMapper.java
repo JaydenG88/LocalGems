@@ -4,9 +4,9 @@ import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 import org.mapstruct.MappingTarget;
 import com.localgems.localgems_backend.model.Business;
-import com.localgems.localgems_backend.dto.BusinessRequestDTO;
-import com.localgems.localgems_backend.dto.BusinessResponseDTO;
-import com.localgems.localgems_backend.dto.CategoryResponseDTO;
+import com.localgems.localgems_backend.dto.requestDTO.BusinessRequestDTO;
+import com.localgems.localgems_backend.dto.responseDTO.BusinessResponseDTO;
+import com.localgems.localgems_backend.dto.responseDTO.CategoryResponseDTO;
 
 @Mapper(componentModel = "spring")
 public interface BusinessMapper {

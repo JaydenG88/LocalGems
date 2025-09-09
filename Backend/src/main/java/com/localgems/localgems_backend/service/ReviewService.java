@@ -10,8 +10,10 @@ import com.localgems.localgems_backend.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 
 import com.localgems.localgems_backend.mapper.ReviewMapper;
-import com.localgems.localgems_backend.dto.ReviewRequestDTO;
-import com.localgems.localgems_backend.dto.ReviewResponseDTO;
+import com.localgems.localgems_backend.dto.requestDTO.ReviewRequestDTO;
+import com.localgems.localgems_backend.dto.responseDTO.ReviewResponseDTO;
+import com.localgems.localgems_backend.dto.updateDTO.ReviewUpdateDTO;
+
 import java.util.*;
 
 @Service
@@ -67,22 +69,10 @@ public class ReviewService {
         return reviewOpt.map( review -> reviewMapper.entityToDto(review));
     }
 
-    public ReviewResponseDTO updateReview(Long id, ReviewRequestDTO reviewRequestDTO) {
+    public ReviewResponseDTO updateReview(Long id, ReviewUpdateDTO reviewUpdateDTO) {
         Review review = reviewRepository.findById(id)
             .orElseThrow(() -> new NoSuchElementException("Review not found with id: " + id));
-        reviewMapper.updateEntityFromDto(reviewRequestDTO, review);
-
-        if(reviewRequestDTO.getBusinessId() != null) {
-            Business business = businessRepository.findById(reviewRequestDTO.getBusinessId())
-            .orElseThrow(() -> new EntityNotFoundException("Business not found"));
-            review.setBusiness(business);
-        }
-
-        if(reviewRequestDTO.getUserId() != null) {
-            User user = userRepository.findById(reviewRequestDTO.getUserId())
-            .orElseThrow(() -> new EntityNotFoundException("user not found"));
-            review.setUser(user);
-        }
+        reviewMapper.updateEntityFromDto(reviewUpdateDTO, review);
 
         Review updatedReview = reviewRepository.save(review);
         return reviewMapper.entityToDto(updatedReview);

@@ -11,8 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import com.localgems.localgems_backend.service.CityService;
-import com.localgems.localgems_backend.dto.CityRequestDTO;
-import com.localgems.localgems_backend.dto.CityResponseDTO;
+import com.localgems.localgems_backend.dto.requestDTO.CityRequestDTO;
+import com.localgems.localgems_backend.dto.responseDTO.CityResponseDTO;
+
 import java.util.*;
 
 @RestController

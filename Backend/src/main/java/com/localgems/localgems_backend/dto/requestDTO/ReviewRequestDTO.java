@@ -1,4 +1,4 @@
-package com.localgems.localgems_backend.dto;
+package com.localgems.localgems_backend.dto.requestDTO;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;

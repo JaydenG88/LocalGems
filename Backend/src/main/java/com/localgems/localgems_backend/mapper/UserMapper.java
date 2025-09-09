@@ -4,8 +4,8 @@ import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 import org.mapstruct.MappingTarget;
 import com.localgems.localgems_backend.model.User;
-import com.localgems.localgems_backend.dto.UserRequestDTO;
-import com.localgems.localgems_backend.dto.UserResponseDTO;
+import com.localgems.localgems_backend.dto.requestDTO.UserRequestDTO;
+import com.localgems.localgems_backend.dto.responseDTO.UserResponseDTO;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {

@@ -1,4 +1,4 @@
-package com.localgems.localgems_backend.dto;
+package com.localgems.localgems_backend.dto.responseDTO;
 
 import java.time.LocalDateTime;
 
