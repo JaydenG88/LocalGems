@@ -15,6 +15,7 @@ import com.localgems.localgems_backend.dto.BusinessResponseDTO;
 import java.util.*;
 
 @RestController
+@RequestMapping("/api/businesses")
 public class BusinessController {
     private final BusinessService businessService;
 
@@ -22,13 +23,13 @@ public class BusinessController {
         this.businessService = businessService;
     }
 
-    @GetMapping("/businesses")
+    @GetMapping
     public ResponseEntity<List<BusinessResponseDTO>> getAllBusinesses() {
         List<BusinessResponseDTO> businesses = businessService.getAllBusinesses();
         return new ResponseEntity<>(businesses, HttpStatus.OK);
     }
 
-    @GetMapping("/businesses/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<BusinessResponseDTO> getBusinessById(@PathVariable Long id) {
         Optional<BusinessResponseDTO> businessOpt = businessService.getBusinessById(id);
         return businessOpt.map(business -> new ResponseEntity<>(business, HttpStatus.OK))
@@ -36,13 +37,13 @@ public class BusinessController {
 
     }
 
-    @PostMapping("/businesses")
+    @PostMapping
     public ResponseEntity<BusinessResponseDTO> createBusiness(@RequestBody BusinessRequestDTO businessRequestDTO) {
         BusinessResponseDTO createdBusiness = businessService.createBusiness(businessRequestDTO);
         return new ResponseEntity<>(createdBusiness, HttpStatus.CREATED);
     }
 
-    @PutMapping("/businesses/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<BusinessResponseDTO> updateBusiness(@PathVariable Long id, @RequestBody BusinessRequestDTO businessRequestDTO) {
         try {
             BusinessResponseDTO updatedBusiness = businessService.updateBusiness(id, businessRequestDTO);
@@ -52,7 +53,7 @@ public class BusinessController {
         }
     }
     
-    @DeleteMapping("/businesses/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBusiness(@PathVariable Long id) {
         try {
             businessService.deleteBusiness(id);
