@@ -77,3 +77,8 @@ INSERT INTO saved_businesses (saved_business_id, user_id, business_id, saved_at)
 
 -- Reset the sequence so new inserts get the correct next ID
 SELECT setval('businesses_business_id_seq', (SELECT MAX(business_id) FROM businesses));
+SELECT setval('users_user_id_seq', (SELECT MAX(user_id) FROM users));
+SELECT setval('categories_category_id_seq', (SELECT MAX(category_id) FROM categories));
+SELECT setval('cities_city_id_seq', (SELECT MAX(city_id) FROM cities));
+SELECT setval('reviews_review_id_seq', (SELECT MAX(review_id) FROM reviews));
+SELECT setval('saved_businesses_saved_business_id_seq', (SELECT MAX(saved_business_id) FROM saved_businesses));
