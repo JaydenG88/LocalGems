@@ -16,6 +16,8 @@ public class BusinessResponseDTO {
     private LocalDateTime dateAdded;
     private String website;
     private String imageUrl;
+    private Double averageRating;
+    private Integer reviewCount;
 
     // Getters and Setters
     public Long getBusinessId() {
@@ -95,6 +97,20 @@ public class BusinessResponseDTO {
     }
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+    public Double getAverageRating() {
+        return averageRating;
+    }
+    public void setAverageRating(Double averageRating) {
+        this.averageRating = averageRating;
+    }
+
+    public Integer getReviewCount() {
+        return reviewCount;
+    }
+
+    public void setReviewCount(Integer reviewCount) {
+        this.reviewCount = reviewCount;
     }
     
 }

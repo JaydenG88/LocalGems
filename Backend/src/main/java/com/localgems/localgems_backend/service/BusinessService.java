@@ -9,6 +9,9 @@ import com.localgems.localgems_backend.repository.CategoryRepository;
 import com.localgems.localgems_backend.mapper.BusinessMapper;
 import com.localgems.localgems_backend.dto.requestDTO.BusinessRequestDTO;
 import com.localgems.localgems_backend.dto.responseDTO.BusinessResponseDTO;
+import com.localgems.localgems_backend.repository.ReviewRepository;
+import com.localgems.localgems_backend.model.Review;
+import com.localgems.localgems_backend.service.ReviewService;
 
 import java.util.*;
 
@@ -19,12 +22,14 @@ public class BusinessService {
     private final BusinessMapper businessMapper;
     private final CityRepository cityRepository;
     private final CategoryRepository categoryRepository;
+    private final ReviewRepository reviewRepository;
 
-    public BusinessService(BusinessRepository businessRepository, BusinessMapper businessMapper, CityRepository cityRepository, CategoryRepository categoryRepository) {
+    public BusinessService(BusinessRepository businessRepository, BusinessMapper businessMapper, CityRepository cityRepository, CategoryRepository categoryRepository, ReviewRepository reviewRepository) {
         this.businessRepository = businessRepository;
         this.businessMapper = businessMapper;
         this.cityRepository = cityRepository;
         this.categoryRepository = categoryRepository;
+        this.reviewRepository = reviewRepository;
     }
 
     public BusinessResponseDTO createBusiness(BusinessRequestDTO businessRequestDTO) {
@@ -50,12 +55,29 @@ public class BusinessService {
         for (Business business : businesses) {
             businessResponseDTOs.add(businessMapper.entityToDto(business));
         }
+
         return businessResponseDTOs;
     }
 
     public Optional<BusinessResponseDTO> getBusinessById(Long id) {
         Optional<Business> businessOpt = businessRepository.findById(id);
-        return businessOpt.map(business -> businessMapper.entityToDto(business));
+        Double averageRating = reviewRepository.findAverageRatingByBusinessId(id);
+        System.out.println("Average Rating: " + averageRating);
+        Integer reviewCount = reviewRepository.findByBusiness_BusinessId(id).size();
+
+        businessOpt.ifPresent(business -> {
+            BusinessResponseDTO dto = businessMapper.entityToDto(business);
+            dto.setAverageRating(averageRating);
+            dto.setReviewCount(reviewCount);
+        });
+
+        BusinessResponseDTO dto = businessOpt.map(business -> businessMapper.entityToDto(business)).orElse(null);
+        if (dto != null) {
+            dto.setAverageRating(averageRating);
+            dto.setReviewCount(reviewCount);
+        }
+
+        return dto == null ? Optional.empty() : Optional.of(dto);
     }
 
     public BusinessResponseDTO updateBusiness(Long id, BusinessRequestDTO dto) {
