@@ -56,26 +56,49 @@ public class BusinessController {
         @RequestParam(required = false) Double rating,
         @RequestParam(required = false) List<Long> categoryIds
     ) {
-
-        City cityEntity = null;
-        if (cityId != null) {
-            cityEntity = cityRepository.findById(cityId).
-            orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "City not found"));
-        }
-
-        List<Category> categoryEntities = null;
-        if (categoryIds != null && !categoryIds.isEmpty()) {
-
-            for(Long categoryId : categoryIds) {
-                Category category = categoryRepository.findById(categoryId).
-                orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Categories not found"));
-
-                categoryEntities.add(category);
+        try {
+            // Handle city parameter
+            City cityEntity = null;
+            if (cityId != null) {
+                try {
+                    cityEntity = cityRepository.findById(cityId)
+                        .orElse(null); // Use null instead of throwing an exception
+                } catch (Exception e) {
+                    // Just log the error and continue with null
+                    System.out.println("Error finding city with ID " + cityId + ": " + e.getMessage());
+                }
             }
-        }
 
-        List<BusinessResponseDTO> filteredBusinessDTOs = businessService.filterBusinesses(cityEntity, state, categoryEntities, rating);
-        return ResponseEntity.ok(filteredBusinessDTOs);
+            // Handle categories parameter
+            List<Category> categoryEntities = new ArrayList<>();
+            if (categoryIds != null && !categoryIds.isEmpty()) {
+                for (Long categoryId : categoryIds) {
+                    try {
+                        categoryRepository.findById(categoryId)
+                            .ifPresent(categoryEntities::add);
+                    } catch (Exception e) {
+                        // Just log the error and continue
+                        System.out.println("Error finding category with ID " + categoryId + ": " + e.getMessage());
+                    }
+                }
+            }
+
+            // Call the service with potentially empty collections
+            List<BusinessResponseDTO> filteredBusinessDTOs = businessService.filterBusinesses(
+                cityEntity, 
+                state, 
+                categoryEntities.isEmpty() ? null : categoryEntities, 
+                rating
+            );
+            
+            return ResponseEntity.ok(filteredBusinessDTOs);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new ResponseStatusException(
+                HttpStatus.INTERNAL_SERVER_ERROR, 
+                "Error filtering businesses: " + e.getMessage()
+            );
+        }
     }
 
     @PostMapping

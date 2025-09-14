@@ -81,15 +81,54 @@ public class BusinessService {
     }
 
     public List<BusinessResponseDTO> filterBusinesses(City city, String state, List<Category> categories, Double rating) {
-        List<Business> filteredBusinesses = businessRepository.filterBusinesses(city, state, categories, rating);
+        // Get initial list of businesses filtered by city and state
+        List<Business> filteredBusinesses = businessRepository.filterBusinesses(city, state, null, null);
         List<BusinessResponseDTO> filteredResponseDTOs = new ArrayList<>();
-
+        
+        // Apply additional filters in memory (categories and rating)
         for (Business business : filteredBusinesses) {
-            filteredResponseDTOs.add(businessMapper.entityToDto(business));
-       }
-
-       return filteredResponseDTOs;
-
+            boolean includeByCategory = categories == null || categories.isEmpty();
+            boolean includeByRating = true;
+            
+            // Check categories if needed
+            if (!includeByCategory) {
+                for (Category category : business.getCategories()) {
+                    if (categories.contains(category)) {
+                        includeByCategory = true;
+                        break;
+                    }
+                }
+            }
+            
+            // Check rating if needed
+            if (rating != null) {
+                List<Review> reviews = reviewRepository.findByBusiness_BusinessId(business.getBusinessId());
+                if (!reviews.isEmpty()) {
+                    double avgRating = reviews.stream()
+                        .mapToInt(Review::getRating)
+                        .average()
+                        .orElse(0.0);
+                    includeByRating = avgRating >= rating;
+                } else {
+                    includeByRating = false; // No reviews means it doesn't meet the rating criteria
+                }
+            }
+            
+            // Add to results if it passes all filters
+            if (includeByCategory && includeByRating) {
+                BusinessResponseDTO dto = businessMapper.entityToDto(business);
+                
+                // Add rating information
+                Double averageRating = reviewRepository.findAverageRatingByBusinessId(business.getBusinessId());
+                Integer reviewCount = reviewRepository.findByBusiness_BusinessId(business.getBusinessId()).size();
+                dto.setAverageRating(averageRating);
+                dto.setReviewCount(reviewCount);
+                
+                filteredResponseDTOs.add(dto);
+            }
+        }
+        
+        return filteredResponseDTOs;
     }
 
     public BusinessResponseDTO updateBusiness(Long id, BusinessRequestDTO dto) {
