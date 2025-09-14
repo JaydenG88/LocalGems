@@ -9,7 +9,8 @@ import com.localgems.localgems_backend.model.Review;
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Long> {
     List<Review> findByBusiness_BusinessId(Long businessId);
-
+    List<Review> findByUser_UserId(Long userId);
+    
     @Query("SELECT AVG(r.rating) FROM Review r WHERE r.business.id = :businessId")
     Double findAverageRatingByBusinessId(@Param("businessId") Long businessId);
 } 

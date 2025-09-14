@@ -80,6 +80,18 @@ public class BusinessService {
         return dto == null ? Optional.empty() : Optional.of(dto);
     }
 
+    public List<BusinessResponseDTO> filterBusinesses(City city, String state, List<Category> categories, Double rating) {
+        List<Business> filteredBusinesses = businessRepository.filterBusinesses(city, state, categories, rating);
+        List<BusinessResponseDTO> filteredResponseDTOs = new ArrayList<>();
+
+        for (Business business : filteredBusinesses) {
+            filteredResponseDTOs.add(businessMapper.entityToDto(business));
+       }
+
+       return filteredResponseDTOs;
+
+    }
+
     public BusinessResponseDTO updateBusiness(Long id, BusinessRequestDTO dto) {
         Business business = businessRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Business not found with id: " + id));
