@@ -11,7 +11,6 @@ import com.localgems.localgems_backend.dto.requestDTO.BusinessRequestDTO;
 import com.localgems.localgems_backend.dto.responseDTO.BusinessResponseDTO;
 import com.localgems.localgems_backend.repository.ReviewRepository;
 import com.localgems.localgems_backend.model.Review;
-import com.localgems.localgems_backend.service.ReviewService;
 
 import java.util.*;
 
