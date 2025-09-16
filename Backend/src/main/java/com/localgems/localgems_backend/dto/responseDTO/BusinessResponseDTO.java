@@ -15,7 +15,7 @@ public class BusinessResponseDTO {
     private String description;
     private LocalDateTime dateAdded;
     private String website;
-    private String imageUrl;
+    private String photoReference;
     private Double averageRating;
     private Integer reviewCount;
 
@@ -92,11 +92,11 @@ public class BusinessResponseDTO {
     public void setWebsite(String website) {
         this.website = website;
     }
-    public String getImageUrl() {
-        return imageUrl;
+    public String getPhotoReference() {
+        return photoReference;
     }
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setPhotoReference(String photoReference) {
+        this.photoReference = photoReference;
     }
     public Double getAverageRating() {
         return averageRating;

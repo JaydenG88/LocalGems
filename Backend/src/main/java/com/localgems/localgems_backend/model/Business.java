@@ -46,8 +46,8 @@ public class Business {
     
     private String website;
 
-    @Column(name = "image_url")
-    private String imageUrl;
+    @Column(name = "photo_reference")
+    private String photoReference;
 
     // Getters and Setters
     public Long getBusinessId() {
@@ -130,12 +130,12 @@ public class Business {
         this.website = website;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getPhotoReference() {
+        return photoReference;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setPhotoReference(String photoReference) {
+        this.photoReference = photoReference;
     }
 
     public String getGooglePlaceId() {

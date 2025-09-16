@@ -11,7 +11,7 @@ public class BusinessRequestDTO {
     private Double longitude;
     private String description;
     private String website;
-    private String imageUrl;
+    private String photoReference;
 
     // Getters and Setters
     public String getGooglePlaceId() {
@@ -68,11 +68,11 @@ public class BusinessRequestDTO {
     public void setWebsite(String website) {
         this.website = website;
     }
-    public String getImageUrl() {
-        return imageUrl;
+    public String getPhotoReference() {
+        return photoReference;
     }
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setPhotoReference(String photoReference) {
+        this.photoReference = photoReference;
     }
 
 }
