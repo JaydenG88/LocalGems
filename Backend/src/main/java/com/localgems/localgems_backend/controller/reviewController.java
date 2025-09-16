@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+
 import com.localgems.localgems_backend.service.ReviewService;
 import com.localgems.localgems_backend.dto.requestDTO.ReviewRequestDTO;
 import com.localgems.localgems_backend.dto.responseDTO.ReviewResponseDTO;
@@ -38,6 +40,25 @@ public class ReviewController {
 		Optional<ReviewResponseDTO> reviewOpt = reviewService.getReviewById(id);
 		return reviewOpt.map(review -> new ResponseEntity<>(review, HttpStatus.OK))
 						.orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+	}
+
+	@GetMapping("/business/{businessId}")
+	public ResponseEntity<List<ReviewResponseDTO>> getReviewsByBusinessId(@PathVariable Long businessId) {
+		List<ReviewResponseDTO> reviews = reviewService.getReviewsByBusinessId(businessId);
+		if (reviews.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<>(reviews, HttpStatus.OK);
+	}
+
+	@GetMapping("/user/{userId}")
+	public ResponseEntity<List<ReviewResponseDTO>> getReviewsByUserId(@PathVariable Long userId) {
+		List<ReviewResponseDTO> reviews = reviewService.getReviewsByUserId(userId);
+		if(reviews.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<>(reviews, HttpStatus.OK);
 	}
 
 	@PostMapping

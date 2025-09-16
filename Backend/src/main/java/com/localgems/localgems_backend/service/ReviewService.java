@@ -69,6 +69,28 @@ public class ReviewService {
         return reviewOpt.map( review -> reviewMapper.entityToDto(review));
     }
 
+    public List<ReviewResponseDTO> getReviewsByBusinessId(Long businessId) {
+        List<Review> reviews = reviewRepository.findByBusiness_BusinessId(businessId);
+        List<ReviewResponseDTO> reviewResponseDTOs = new ArrayList<>();
+
+        for (Review review : reviews) {
+            reviewResponseDTOs.add(reviewMapper.entityToDto(review));
+        }
+
+        return reviewResponseDTOs;
+    }
+
+    public List<ReviewResponseDTO> getReviewsByUserId(Long userId) {
+        List<Review> reviews = reviewRepository.findByUser_UserId(userId);
+        List<ReviewResponseDTO> reviewResponseDTOs = new ArrayList<>();
+
+        for (Review review : reviews) {
+            reviewResponseDTOs.add(reviewMapper.entityToDto(review));
+        }
+
+        return reviewResponseDTOs;
+    }
+
     public ReviewResponseDTO updateReview(Long id, ReviewUpdateDTO reviewUpdateDTO) {
         Review review = reviewRepository.findById(id)
             .orElseThrow(() -> new NoSuchElementException("Review not found with id: " + id));
