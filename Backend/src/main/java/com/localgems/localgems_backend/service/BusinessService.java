@@ -7,12 +7,12 @@ import com.localgems.localgems_backend.repository.CityRepository;
 import com.localgems.localgems_backend.model.Category;
 import com.localgems.localgems_backend.repository.CategoryRepository;
 import com.localgems.localgems_backend.mapper.BusinessMapper;
+import com.localgems.localgems_backend.dto.externalDTO.GooglePlacesDTO;
 import com.localgems.localgems_backend.dto.requestDTO.BusinessRequestDTO;
 import com.localgems.localgems_backend.dto.responseDTO.BusinessResponseDTO;
 import com.localgems.localgems_backend.repository.ReviewRepository;
 import com.localgems.localgems_backend.model.Review;
 import com.localgems.localgems_backend.service.external.GoogleMapsService;
-import com.localgems.localgems_backend.dto.GooglePlacesDTO;
 
 import java.util.*;
 
@@ -36,7 +36,6 @@ public class BusinessService {
     }
 
     public BusinessResponseDTO submitBusiness(String address) {
-        GooglePlacesDTO placesDetailsDTO = googleMapsService.getPlaceDetailsFromAddress(address);
         
         // Unfinished unitl AI functionality is added
         // Pseudo code:

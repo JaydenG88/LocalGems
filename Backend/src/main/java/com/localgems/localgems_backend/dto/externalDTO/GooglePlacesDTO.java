@@ -1,4 +1,4 @@
-package com.localgems.localgems_backend.dto;
+package com.localgems.localgems_backend.dto.externalDTO;
 import java.util.List;
 
 public class GooglePlacesDTO {
