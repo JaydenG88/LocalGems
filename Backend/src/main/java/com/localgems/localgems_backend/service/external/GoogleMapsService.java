@@ -6,8 +6,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.http.HttpEntity;
+import com.localgems.localgems_backend.dto.GooglePlacesDTO;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
 
 @Service
 public class GoogleMapsService {
@@ -17,24 +19,66 @@ public class GoogleMapsService {
     private  String apiKey;
     private final RestTemplate restTemplate = new RestTemplate();
 
-    public Map<String, String> getPlaceDetailsFromAddress(String address) {
+    public GooglePlacesDTO getPlaceDetailsFromAddress(String address) {
         String url = BASE_URL + apiKey;
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.add("X-Goog-FieldMask", "places.displayName,places.id,places.formattedAddress");
+        headers.add("X-Goog-FieldMask", "places.id,places.displayName,places.formattedAddress,places.location,places.addressComponents,places.types,places.photos,places.rating,places.userRatingCount,places.editorialSummary,places.priceLevel,places.reviews");
 
         Map<String, Object> body = new HashMap<>();
         body.put("textQuery", address);
 
         HttpEntity<Map<String, Object>> request = new HttpEntity<>(body, headers);
-        ResponseEntity<Map> response = restTemplate.postForEntity(url, request, Map.class);
+        ResponseEntity<HashMap> response = restTemplate.postForEntity(url, request, HashMap.class);
 
-        return response.getBody();
+        return convertResponseToDTO(response.getBody());
     }
-    public static void main(String[] args) {
-        GoogleMapsService service = new GoogleMapsService();
-        Map<String, String> result = service.getPlaceDetailsFromAddress("1600 Amphitheatre Parkway, Mountain View, CA");
-        System.out.println(result);
+
+  private GooglePlacesDTO convertResponseToDTO(Map<String, Object> response) {
+    List<Map<String, Object>> places = (List<Map<String, Object>>) response.get("places");
+    if (places == null || places.isEmpty()) {
+        return null;
     }
+    
+    Map<String, Object> place = places.get(0);
+    GooglePlacesDTO dto = new GooglePlacesDTO();
+    
+    dto.setPlaceId((String) place.get("id"));
+    dto.setAddress((String) place.get("formattedAddress"));
+    
+    Map<String, Double> location = (Map<String, Double>) place.get("location");
+    if (location != null) {
+        dto.setLatitude(location.get("latitude"));
+        dto.setLongitude(location.get("longitude"));
+    }
+    
+    Map<String, String> displayName = (Map<String, String>) place.get("displayName");
+    if (displayName != null) {
+        dto.setName(displayName.get("text"));
+    }
+    
+    List<Map<String, Object>> addressComponents = 
+        (List<Map<String, Object>>) place.get("addressComponents");
+    
+    if (addressComponents != null) {
+        for (Map<String, Object> component : addressComponents) {
+            List<String> types = (List<String>) component.get("types");
+            if (types.contains("locality")) {
+                dto.setCity((String) component.get("longText"));
+            } else if (types.contains("administrative_area_level_1")) {
+                dto.setState((String) component.get("shortText"));
+            }
+        }
+    }
+    
+    List<Map<String, Object>> photos = (List<Map<String, Object>>) place.get("photos");
+    if (photos != null && !photos.isEmpty()) {
+        dto.setPhotoReference((String) photos.get(0).get("name"));
+    }
+    
+    return dto;
+}
+
+
 }
