@@ -11,6 +11,8 @@ import com.localgems.localgems_backend.dto.requestDTO.BusinessRequestDTO;
 import com.localgems.localgems_backend.dto.responseDTO.BusinessResponseDTO;
 import com.localgems.localgems_backend.repository.ReviewRepository;
 import com.localgems.localgems_backend.model.Review;
+import com.localgems.localgems_backend.service.external.GoogleMapsService;
+import com.localgems.localgems_backend.dto.GooglePlacesDTO;
 
 import java.util.*;
 
@@ -22,13 +24,28 @@ public class BusinessService {
     private final CityRepository cityRepository;
     private final CategoryRepository categoryRepository;
     private final ReviewRepository reviewRepository;
+    private final GoogleMapsService googleMapsService;
 
-    public BusinessService(BusinessRepository businessRepository, BusinessMapper businessMapper, CityRepository cityRepository, CategoryRepository categoryRepository, ReviewRepository reviewRepository) {
+    public BusinessService(BusinessRepository businessRepository, BusinessMapper businessMapper, CityRepository cityRepository, CategoryRepository categoryRepository, ReviewRepository reviewRepository, GoogleMapsService googleMapsService) {
         this.businessRepository = businessRepository;
         this.businessMapper = businessMapper;
         this.cityRepository = cityRepository;
         this.categoryRepository = categoryRepository;
         this.reviewRepository = reviewRepository;
+        this.googleMapsService = googleMapsService;
+    }
+
+    public BusinessResponseDTO submitBusiness(String address) {
+        GooglePlacesDTO placesDetailsDTO = googleMapsService.getPlaceDetailsFromAddress(address);
+        
+        // Unfinished unitl AI functionality is added
+        // Pseudo code:
+        // BusinessReqiestDTO requestdto = openaiValidation(placesDetailsDTO) // validation is done inside openaiValidation
+        // BusinessResponseDTO responseDTO = createBusiness(requestdto)
+        //  
+        //  
+        // 
+        return null;
     }
 
     public BusinessResponseDTO createBusiness(BusinessRequestDTO businessRequestDTO) {

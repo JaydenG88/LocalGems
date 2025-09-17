@@ -22,4 +22,5 @@ public interface BusinessMapper {
 
     void updateEntityFromDto(BusinessRequestDTO dto, @MappingTarget Business entity);
     
+        
 }
