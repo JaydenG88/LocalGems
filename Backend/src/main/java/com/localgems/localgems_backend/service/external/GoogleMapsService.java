@@ -1,4 +1,5 @@
 package com.localgems.localgems_backend.service.external;
+import java.net.http.HttpResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -6,6 +7,7 @@ import com.localgems.localgems_backend.dto.externalDTO.GooglePlacesDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -32,9 +34,17 @@ public class GoogleMapsService {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.add("X-Goog-FieldMask", "id,displayName.text,formattedAddress,location.latitude,location.longitude,addressComponents,types,photos.name,rating,userRatingCount,priceLevel,editorialSummary.text,reviews.text.text" );
+        headers.set("X-Goog-Api-Key", apiKey);
+        headers.set("X-Goog-FieldMask",
+            "id,displayName,formattedAddress,location,addressComponents,types,photos,rating,userRatingCount"
+            + ",editorialSummary,priceLevel,websiteUri"
+            + ",reviews"
+        );
 
-        
+        HttpEntity<Void> request = new HttpEntity<>(headers);
+        ResponseEntity response = restTemplate.exchange(url, HttpMethod.GET, request, String.class, placeId);
+
+        System.out.println(response.getBody());
     }
 
 
@@ -48,10 +58,10 @@ public class GoogleMapsService {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.add("X-Goog-FieldMask","places.id");
+        headers.set("X-Goog-FieldMask","places.id");
         
         Map<String, Object> body = new HashMap<>();
-        body.put("textQuery", address);
+        body.put("textQuery", "Sea Gypsy Gifts, Astoria, OR");
 
         HttpEntity<Map<String, Object>> request = new HttpEntity<>(body, headers);
         ResponseEntity<HashMap> response = restTemplate.postForEntity(url, request, HashMap.class);
@@ -85,7 +95,9 @@ public class GoogleMapsService {
 
     public static void main(String[] args) {
         GoogleMapsService service = new GoogleMapsService();
-        System.out.println(service.getPlaceIdFromAddress("1600 Amphitheatre Parkway, Mountain View, CA"));
+        String id = service.getPlaceIdFromAddress("1004 Commercial St, Astoria, OR 97103");
+
+        service.getPlaceDetailsById(id);
     }
 
 }
