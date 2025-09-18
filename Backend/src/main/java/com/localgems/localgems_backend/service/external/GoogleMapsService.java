@@ -1,9 +1,8 @@
 package com.localgems.localgems_backend.service.external;
-import java.net.http.HttpResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import com.localgems.localgems_backend.dto.externalDTO.GooglePlacesDTO;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -12,24 +11,32 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import com.localgems.localgems_backend.dto.externalDTO.GooglePlacesDTO;
 
 @Service
 public class GoogleMapsService {
     private static final String SEARCH_URL = "https://places.googleapis.com/v1/places:searchText?key=";
-    private static final String PLACE_DETAILS_URL = "https://places.googleapis.com/v1/places/";
+    private static final String PLACE_DETAILS_URL = "https://places.googleapis.com/v1/places/"; 
 
-    // Regex pattern to validate address format (street address, city, state)
-    public static final String ADDRESS_REGEX = 
-    "^\\s*([0-9]+\\s+[A-Za-z0-9\\s\\-\\.,#&']+?|[A-Za-z0-9\\s\\-\\.,#&']+?)\\s*," +  // Street address
-    "\\s*([A-Za-z\\s\\-\\.]+?),?" +                                                 // City 
-    "\\s*([A-Za-z]{2}|[A-Za-z\\s\\-\\.]+?)\\s*" +                                   // State/Province
-    "(\\d{5}(-\\d{4})?)?\\s*$"; 
+    public static final String BUSINESS_SEARCH_REGEX = 
+    "^([A-Za-z0-9\\s\\-\\.,#&'()]+)," +     // Business name
+    "\\s*([A-Za-z\\s\\-\\.]+)," +           // City
+    "\\s*([A-Za-z\\s\\.]{2,})\\s*$";        // State (2+ characters)
+
 
     @Value("${google.api.key}")
     private  String apiKey;
     private final RestTemplate restTemplate = new RestTemplate();
 
-    public void getPlaceDetailsById(String placeId) {
+
+    public GooglePlacesDTO getPlaceDetailsBySearch(String searchQuery) {
+        String placeId = getPlaceIdFromSearch(searchQuery);
+
+
+        return null;
+    }
+
+    private Object getPlaceDetailsById(String placeId) {
         String url = PLACE_DETAILS_URL + placeId + "?key=" + apiKey;
 
         HttpHeaders headers = new HttpHeaders();
@@ -44,14 +51,12 @@ public class GoogleMapsService {
         HttpEntity<Void> request = new HttpEntity<>(headers);
         ResponseEntity response = restTemplate.exchange(url, HttpMethod.GET, request, String.class, placeId);
 
-        System.out.println(response.getBody());
+        return response.getBody();
     }
 
-
-
-    public String getPlaceIdFromAddress(String address) {
-        if(!isValidAddressFormat(address)) {
-            throw new IllegalArgumentException("Invalid address format. Please provide a valid street address, city, and state.");
+    private String getPlaceIdFromSearch(String searchQuery) {
+        if (!isValidSearchQuery(searchQuery)) {
+            throw new IllegalArgumentException("Invalid search query format. Expected format: 'Business Name, City, State'");
         }
 
         String url = SEARCH_URL + apiKey;
@@ -61,7 +66,7 @@ public class GoogleMapsService {
         headers.set("X-Goog-FieldMask","places.id");
         
         Map<String, Object> body = new HashMap<>();
-        body.put("textQuery", "Sea Gypsy Gifts, Astoria, OR");
+        body.put("textQuery", searchQuery);
 
         HttpEntity<Map<String, Object>> request = new HttpEntity<>(body, headers);
         ResponseEntity<HashMap> response = restTemplate.postForEntity(url, request, HashMap.class);
@@ -84,18 +89,23 @@ public class GoogleMapsService {
         return placeId;
     }
 
-
-    private boolean isValidAddressFormat(String address) {
-        if (address == null || address.trim().isEmpty()) {
+    private Boolean isValidSearchQuery(String searchQuery) {
+        if (searchQuery == null || searchQuery.trim().isEmpty()) {
             return false;
         }
-        
-        return address.matches(ADDRESS_REGEX);
+
+        return searchQuery.matches(BUSINESS_SEARCH_REGEX);
+    }
+
+    private GooglePlacesDTO mapToGooglePlacesDTO(Object placeDetails) {
+        GooglePlacesDTO dto = new GooglePlacesDTO();
+        // Map fields from placeDetails to dto
+        return dto;
     }
 
     public static void main(String[] args) {
         GoogleMapsService service = new GoogleMapsService();
-        String id = service.getPlaceIdFromAddress("1004 Commercial St, Astoria, OR 97103");
+        String id = service.getPlaceIdFromSearch("1004 Commercial St, Astoria, OR 97103");
 
         service.getPlaceDetailsById(id);
     }
