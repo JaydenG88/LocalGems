@@ -2,7 +2,7 @@ package com.localgems.localgems_backend.service.external;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -11,7 +11,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
 import com.localgems.localgems_backend.dto.externalDTO.GooglePlacesDTO;
 
 @Service
@@ -32,9 +31,13 @@ public class GoogleMapsService {
 
     public GooglePlacesDTO getPlaceDetailsBySearch(String searchQuery) {
         String placeId = getPlaceIdFromSearch(searchQuery);
-
-
-        return null;
+        if (placeId != null) {
+            Map<String, Object> placeDetails = getPlaceDetailsById(placeId);
+            return mapToGooglePlacesDTO(placeDetails);
+            
+        } else {
+            throw new RuntimeException("Place ID not found for the given search query");
+        }
     }
 
     private Map<String, Object> getPlaceDetailsById(String placeId) {
@@ -110,25 +113,21 @@ public class GoogleMapsService {
         dto.setCity((String) ((List<Map<String, Object>>)placeDetails.get("addressComponents")).get(4).get("longText"));
         dto.setState((String) ((List<Map<String, Object>>)placeDetails.get("addressComponents")).get(6).get("shortText"));
         dto.setCategories((List<String>) placeDetails.get("types"));
+        dto.setRating((Double) placeDetails.get("rating"));
+        dto.setTotalRatings((Integer) placeDetails.get("userRatingCount"));
+        dto.setEditorialSummary((String)((Map<String, String>) placeDetails.get("editorialSummary")).get("text"));
+
+        List<Map<String, Object>> reviewsRaw = (List<Map<String, Object>>) placeDetails.get("reviews");
+        List<String> reviewText = new ArrayList<>();
+
+        for (Map<String, Object> review : reviewsRaw) {
+            reviewText.add((String)((Map<String, String>) review.get("text")).get("text"));
+        }
+
+        dto.setReviewSnippets(reviewText);
+
 
         return dto;
-    }
-
-    public static void main(String[] args) {
-        GoogleMapsService service = new GoogleMapsService();
-        String id = service.getPlaceIdFromSearch("Golden Age Collectables, Seattle, WA");
-
-
-        Map<String, Object> test = service.getPlaceDetailsById(id);
-        GooglePlacesDTO dto = service.mapToGooglePlacesDTO(test);
-        System.out.println(dto.getPlaceId());
-        System.out.println(dto.getName());
-        System.out.println(dto.getAddress());
-        System.out.println(dto.getLatitude());
-        System.out.println(dto.getLongitude());
-        System.out.println(dto.getCity());
-        System.out.println(dto.getState());
-        System.out.println(dto.getCategories());
     }
 
 }

@@ -12,7 +12,6 @@ public class GooglePlacesDTO {
     private List<String> categories;
     private Double rating;
     private Integer totalRatings;
-    private String priceLevel;
     private String editorialSummary; 
     private List<String> reviewSnippets;
 
@@ -77,12 +76,6 @@ public class GooglePlacesDTO {
     }
     public void setTotalRatings(Integer totalRatings) {
         this.totalRatings = totalRatings;
-    }
-    public String getPriceLevel() {
-        return priceLevel;
-    }
-    public void setPriceLevel(String priceLevel) {
-        this.priceLevel = priceLevel;
     }
     public String getEditorialSummary() {
         return editorialSummary;
