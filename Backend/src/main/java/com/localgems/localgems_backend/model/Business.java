@@ -46,9 +46,6 @@ public class Business {
     
     private String website;
 
-    @Column(name = "photo_reference")
-    private String photoReference;
-
     // Getters and Setters
     public Long getBusinessId() {
         return businessId;
@@ -128,14 +125,6 @@ public class Business {
 
     public void setWebsite(String website) {
         this.website = website;
-    }
-
-    public String getPhotoReference() {
-        return photoReference;
-    }
-
-    public void setPhotoReference(String photoReference) {
-        this.photoReference = photoReference;
     }
 
     public String getGooglePlaceId() {

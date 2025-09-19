@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
 import com.localgems.localgems_backend.dto.externalDTO.GooglePlacesDTO;
 
 @Service
@@ -36,20 +37,20 @@ public class GoogleMapsService {
         return null;
     }
 
-    private Object getPlaceDetailsById(String placeId) {
+    private Map<String, Object> getPlaceDetailsById(String placeId) {
         String url = PLACE_DETAILS_URL + placeId + "?key=" + apiKey;
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set("X-Goog-Api-Key", apiKey);
         headers.set("X-Goog-FieldMask",
-            "id,displayName,formattedAddress,location,addressComponents,types,photos,rating,userRatingCount"
+            "id,displayName,formattedAddress,location,addressComponents,types,rating,userRatingCount"
             + ",editorialSummary,priceLevel,websiteUri"
             + ",reviews"
         );
 
         HttpEntity<Void> request = new HttpEntity<>(headers);
-        ResponseEntity response = restTemplate.exchange(url, HttpMethod.GET, request, String.class, placeId);
+        ResponseEntity<Map> response = restTemplate.exchange(url, HttpMethod.GET, request, Map.class, placeId);
 
         return response.getBody();
     }
@@ -97,17 +98,37 @@ public class GoogleMapsService {
         return searchQuery.matches(BUSINESS_SEARCH_REGEX);
     }
 
-    private GooglePlacesDTO mapToGooglePlacesDTO(Object placeDetails) {
+    private GooglePlacesDTO mapToGooglePlacesDTO(Map<String, Object> placeDetails) {
         GooglePlacesDTO dto = new GooglePlacesDTO();
-        // Map fields from placeDetails to dto
+
+
+        dto.setPlaceId((String) placeDetails.get("id"));
+        dto.setName((String) ((Map<String, Object> )placeDetails.get("displayName")).get("text"));
+        dto.setAddress((String) ((List<Map<String, Object>>)placeDetails.get("addressComponents")).get(0).get("longText"));
+        dto.setLatitude((Double) ((Map<String, Object>)placeDetails.get("location")).get("latitude"));
+        dto.setLongitude((Double) ((Map<String, Object>)placeDetails.get("location")).get("longitude"));
+        dto.setCity((String) ((List<Map<String, Object>>)placeDetails.get("addressComponents")).get(4).get("longText"));
+        dto.setState((String) ((List<Map<String, Object>>)placeDetails.get("addressComponents")).get(6).get("shortText"));
+        dto.setCategories((List<String>) placeDetails.get("types"));
+
         return dto;
     }
 
     public static void main(String[] args) {
         GoogleMapsService service = new GoogleMapsService();
-        String id = service.getPlaceIdFromSearch("1004 Commercial St, Astoria, OR 97103");
+        String id = service.getPlaceIdFromSearch("Golden Age Collectables, Seattle, WA");
 
-        service.getPlaceDetailsById(id);
+
+        Map<String, Object> test = service.getPlaceDetailsById(id);
+        GooglePlacesDTO dto = service.mapToGooglePlacesDTO(test);
+        System.out.println(dto.getPlaceId());
+        System.out.println(dto.getName());
+        System.out.println(dto.getAddress());
+        System.out.println(dto.getLatitude());
+        System.out.println(dto.getLongitude());
+        System.out.println(dto.getCity());
+        System.out.println(dto.getState());
+        System.out.println(dto.getCategories());
     }
 
 }

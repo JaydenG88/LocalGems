@@ -10,7 +10,6 @@ public class GooglePlacesDTO {
     private String city;
     private String state;
     private List<String> categories;
-    private String photoReference;
     private Double rating;
     private Integer totalRatings;
     private String priceLevel;
@@ -66,12 +65,6 @@ public class GooglePlacesDTO {
     }
     public void setCategories(List<String> categories) {
         this.categories = categories;
-    }
-    public String getPhotoReference() {
-        return photoReference;
-    }
-    public void setPhotoReference(String photoReference) {
-        this.photoReference = photoReference;
     }
     public Double getRating() {
         return rating;

@@ -18,14 +18,14 @@ INSERT INTO categories (category_id, name) VALUES
 (8, 'Boutique');
 
 -- Businesses
-INSERT INTO businesses (business_id, google_place_id, name, address, city_id, latitude, longitude, description, date_added, website, photo_reference) VALUES
-(1, 'gpid1', 'Golden Gate Eats', '123 Market St', 1, 37.7749, -122.4194, 'A great place in SF', '2023-01-01T10:00:00', 'http://goldengateeats.com', 'http://img.com/gge.jpg'),
-(2, 'gpid2', 'Central Perk', '456 Broadway', 2, 40.7128, -74.0060, 'Famous coffee shop', '2023-01-02T11:00:00', 'http://centralperk.com', 'http://img.com/cp.jpg'),
-(3, 'gpid3', 'Emerald City Books', '789 Pike St', 3, 47.6062, -122.3321, 'Cozy independent bookstore', '2023-01-03T09:30:00', 'http://emeraldcitybooks.com', 'http://img.com/ecb.jpg'),
-(4, 'gpid4', 'Lone Star BBQ', '101 Congress Ave', 4, 30.2672, -97.7431, 'Authentic Texas barbecue', '2023-01-04T12:00:00', 'http://lonestarbbq.com', 'http://img.com/lsbbq.jpg'),
-(5, 'gpid5', 'Windy City Jazz', '202 Michigan Ave', 5, 41.8781, -87.6298, 'Historic jazz club', '2023-01-05T20:00:00', 'http://windycityjazz.com', 'http://img.com/wcj.jpg'),
-(6, 'gpid6', 'Mission Taqueria', '345 Valencia St', 1, 37.7680, -122.4230, 'Best tacos in the Mission', '2023-01-06T11:30:00', 'http://missiontaqueria.com', 'http://img.com/mt.jpg'),
-(7, 'gpid7', 'Brooklyn Bagels', '567 Bedford Ave', 2, 40.7193, -73.9573, 'Authentic NY bagels', '2023-01-07T08:00:00', 'http://brooklynbagels.com', 'http://img.com/bb.jpg');
+INSERT INTO businesses (business_id, google_place_id, name, address, city_id, latitude, longitude, description, date_added, website) VALUES
+(1, 'gpid1', 'Golden Gate Eats', '123 Market St', 1, 37.7749, -122.4194, 'A great place in SF', '2023-01-01T10:00:00', 'http://goldengateeats.com'),
+(2, 'gpid2', 'Central Perk', '456 Broadway', 2, 40.7128, -74.0060, 'Famous coffee shop', '2023-01-02T11:00:00', 'http://centralperk.com'),
+(3, 'gpid3', 'Emerald City Books', '789 Pike St', 3, 47.6062, -122.3321, 'Cozy independent bookstore', '2023-01-03T09:30:00', 'http://emeraldcitybooks.com'),
+(4, 'gpid4', 'Lone Star BBQ', '101 Congress Ave', 4, 30.2672, -97.7431, 'Authentic Texas barbecue', '2023-01-04T12:00:00', 'http://lonestarbbq.com'),
+(5, 'gpid5', 'Windy City Jazz', '202 Michigan Ave', 5, 41.8781, -87.6298, 'Historic jazz club', '2023-01-05T20:00:00', 'http://windycityjazz.com'),
+(6, 'gpid6', 'Mission Taqueria', '345 Valencia St', 1, 37.7680, -122.4230, 'Best tacos in the Mission', '2023-01-06T11:30:00', 'http://missiontaqueria.com'),
+(7, 'gpid7', 'Brooklyn Bagels', '567 Bedford Ave', 2, 40.7193, -73.9573, 'Authentic NY bagels', '2023-01-07T08:00:00', 'http://brooklynbagels.com');
 
 -- Business Categories (join table)
 INSERT INTO business_categories (business_id, category_id) VALUES 
