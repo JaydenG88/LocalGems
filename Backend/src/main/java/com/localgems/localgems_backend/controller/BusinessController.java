@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import com.localgems.localgems_backend.service.BusinessService;
+import com.localgems.localgems_backend.dto.externalDTO.GooglePlacesDTO;
 import com.localgems.localgems_backend.dto.requestDTO.BusinessRequestDTO;
 import com.localgems.localgems_backend.dto.responseDTO.BusinessResponseDTO;
 import com.localgems.localgems_backend.model.City;
@@ -105,6 +106,24 @@ public class BusinessController {
     public ResponseEntity<BusinessResponseDTO> createBusiness(@RequestBody BusinessRequestDTO businessRequestDTO) {
         BusinessResponseDTO createdBusiness = businessService.createBusiness(businessRequestDTO);
         return new ResponseEntity<>(createdBusiness, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/submit") 
+    public ResponseEntity<GooglePlacesDTO> submitBusiness(
+        @RequestParam String businessName,
+        @RequestParam String address,
+        @RequestParam String city,
+        @RequestParam String state
+    ) {
+        try {
+            GooglePlacesDTO placesDto = businessService.submitBusiness(businessName, address, city, state);
+            return new ResponseEntity<>(placesDto, HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PutMapping("/{id}")

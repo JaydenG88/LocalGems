@@ -35,8 +35,13 @@ public class BusinessService {
         this.googleMapsService = googleMapsService;
     }
 
-    public BusinessResponseDTO submitBusiness(String businessName, String address, String city, String state) {
-        googleMapsService.getPlaceDetailsBySearch(address);
+    public GooglePlacesDTO submitBusiness(String businessName, String address, String city, String state) {
+        String search = businessName + ", " + address + ", " + city + ", " + state;
+        GooglePlacesDTO placesDto = googleMapsService.getPlaceDetailsBySearch(search);
+        if (placesDto == null) {
+            throw new NoSuchElementException("Business not found in Google Places");
+        }
+        
         // Unfinished unitl AI functionality is added
         // Pseudo code:
         // BusinessReqiestDTO requestdto = openaiValidation(placesDetailsDTO) // validation is done inside openaiValidation
@@ -44,7 +49,7 @@ public class BusinessService {
         //  
         //  
         // 
-        return null;
+        return placesDto;
     }
 
     public BusinessResponseDTO createBusiness(BusinessRequestDTO businessRequestDTO) {
