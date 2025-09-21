@@ -35,8 +35,8 @@ public class BusinessService {
         this.googleMapsService = googleMapsService;
     }
 
-    public BusinessResponseDTO submitBusiness(String address) {
-        
+    public BusinessResponseDTO submitBusiness(String businessName, String address, String city, String state) {
+        googleMapsService.getPlaceDetailsBySearch(address);
         // Unfinished unitl AI functionality is added
         // Pseudo code:
         // BusinessReqiestDTO requestdto = openaiValidation(placesDetailsDTO) // validation is done inside openaiValidation

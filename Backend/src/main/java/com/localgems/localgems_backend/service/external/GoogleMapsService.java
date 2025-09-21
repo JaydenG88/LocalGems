@@ -1,8 +1,9 @@
 package com.localgems.localgems_backend.service.external;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -11,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
 import com.localgems.localgems_backend.dto.externalDTO.GooglePlacesDTO;
 
 @Service
@@ -19,9 +21,10 @@ public class GoogleMapsService {
     private static final String PLACE_DETAILS_URL = "https://places.googleapis.com/v1/places/"; 
 
     public static final String BUSINESS_SEARCH_REGEX = 
-    "^([A-Za-z0-9\\s\\-\\.,#&'()]+)," +     // Business name
-    "\\s*([A-Za-z\\s\\-\\.]+)," +           // City
-    "\\s*([A-Za-z\\s\\.]{2,})\\s*$";        // State (2+ characters)
+    "^([A-Za-z0-9\\s\\-\\.,#&'()]+)," +                   // Business name
+    "\\s*(?:([A-Za-z0-9\\s\\-\\.,#&'()]+),)?" +           // Optional address
+    "\\s*([A-Za-z\\s\\-\\.]+)," +                         // City
+    "\\s*([A-Za-z\\s\\.]{2,})\\s*$";                      // State (2+ characters)
 
 
     @Value("${google.api.key}")
@@ -104,7 +107,6 @@ public class GoogleMapsService {
     private GooglePlacesDTO mapToGooglePlacesDTO(Map<String, Object> placeDetails) {
         GooglePlacesDTO dto = new GooglePlacesDTO();
 
-
         dto.setPlaceId((String) placeDetails.get("id"));
         dto.setName((String) ((Map<String, Object> )placeDetails.get("displayName")).get("text"));
         dto.setAddress((String) ((List<Map<String, Object>>)placeDetails.get("addressComponents")).get(0).get("longText"));
@@ -125,7 +127,6 @@ public class GoogleMapsService {
         }
 
         dto.setReviewSnippets(reviewText);
-
 
         return dto;
     }
