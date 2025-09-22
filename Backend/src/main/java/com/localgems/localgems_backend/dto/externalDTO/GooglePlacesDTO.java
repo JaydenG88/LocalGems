@@ -89,6 +89,13 @@ public class GooglePlacesDTO {
     public void setReviewSnippets(List<String> reviewSnippets) {
         this.reviewSnippets = reviewSnippets;
     }
+
+    public String toString() {
+        return "GooglePlacesDTO [placeId=" + placeId + ", name=" + name + ", address=" + address + ", latitude="
+                + latitude + ", longitude=" + longitude + ", city=" + city + ", state=" + state + ", categories="
+                + categories + ", rating=" + rating + ", totalRatings=" + totalRatings + ", editorialSummary="
+                + editorialSummary + ", reviewSnippets=" + reviewSnippets + "]";
+    }
     
 }
 
