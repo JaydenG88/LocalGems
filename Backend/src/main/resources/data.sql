@@ -16,6 +16,7 @@ INSERT INTO categories (category_id, name) VALUES
 (6, 'Art Gallery'),
 (7, 'Music Venue'),
 (8, 'Boutique');
+(9, 'Other');
 
 -- Businesses
 INSERT INTO businesses (business_id, google_place_id, name, address, city_id, latitude, longitude, description, date_added, website) VALUES
