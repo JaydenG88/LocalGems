@@ -55,11 +55,6 @@
         <scope>runtime</scope>
     </dependency>
 
-    <!-- Jackson Databind (for JSON processing) -->
-    <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-databind</artifactId>
-    </dependency>
 
 
     <!-- JWT (for token-based authentication) -->

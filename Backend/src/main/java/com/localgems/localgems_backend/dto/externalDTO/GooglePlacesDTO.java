@@ -98,10 +98,21 @@ public class GooglePlacesDTO {
     }
 
     public String toString() {
-        return "GooglePlacesDTO [placeId=" + placeId + ", name=" + name + ", address=" + address + ", latitude="
-                + latitude + ", longitude=" + longitude + ", city=" + city + ", state=" + state + ", categories="
-                + categories + ", rating=" + rating + ", totalRatings=" + totalRatings + ", editorialSummary="
-                + editorialSummary + ", reviewSnippets=" + reviewSnippets + "]";
+        return "GooglePlacesDTO {\n" +
+                "    placeId: " + placeId + ",\n" +
+                "    name: " + name + ",\n" + 
+                "    address: " + address + ",\n" +
+                "    latitude: " + latitude + ",\n" +
+                "    longitude: " + longitude + ",\n" +
+                "    city: " + city + ",\n" +
+                "    state: " + state + ",\n" +
+                "    website: " + website + ",\n" + 
+                "    categories: " + categories + ",\n" +
+                "    rating: " + rating + ",\n" +
+                "    totalRatings: " + totalRatings + ",\n" +
+                "    editorialSummary: " + editorialSummary + ",\n" +
+                "    reviewSnippets: " + reviewSnippets + "\n" +
+                "}";
     }
     
 }

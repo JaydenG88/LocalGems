@@ -83,7 +83,7 @@ INSERT INTO categories (category_id, name) VALUES
 (5, 'Bookstore'),
 (6, 'Art Gallery'),
 (7, 'Music Venue'),
-(8, 'Boutique');
+(8, 'Boutique'),
 (9, 'Other');
 
 -- Businesses

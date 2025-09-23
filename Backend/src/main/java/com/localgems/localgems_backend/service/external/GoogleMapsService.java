@@ -119,22 +119,25 @@ public class GoogleMapsService {
         // Handle address components - this is more complex as it involves nested structures
         List<Map<String, Object>> addressComponents = (List<Map<String, Object>>) placeDetails.get("addressComponents");
         if (addressComponents != null && addressComponents.size() >= 2) {
-            String address = "";
-            if (addressComponents.size() > 0) {
-                address += (String) addressComponents.get(0).get("longText");
+            String streetNumber = "";
+            String route = "";
+
+            for (Map<String, Object> component : addressComponents) {
+                String type = (String) ((List<String>) component.get("types")).get(0);
+                
+                if (type.equals("street_number")) {
+                    streetNumber = (String) component.get("shortText");
+                } else if (type.equals("route")) {
+                    route = (String) component.get("shortText");
+                } else if (type.equals("locality")) {
+                    dto.setCity((String)component.get("longText"));
+                } else if (type.equals("administrative_area_level_1")) {
+                    dto.setState((String) component.get("shortText"));
+                }
+
             }
-            if (addressComponents.size() > 1) {
-                address += " " + (String) addressComponents.get(1).get("longText");
-            }
-            dto.setAddress(address);
-            
-            // City and state - be careful with index access
-            if (addressComponents.size() > 4) {
-                dto.setCity((String) addressComponents.get(4).get("longText"));
-            }
-            if (addressComponents.size() > 6) {
-                dto.setState((String) addressComponents.get(6).get("shortText"));
-            }
+
+            dto.setAddress(streetNumber + " " + route.trim());
         }
         
         // Handle location
@@ -177,7 +180,6 @@ public class GoogleMapsService {
 
         return dto;
     }
-
 
 
 }
