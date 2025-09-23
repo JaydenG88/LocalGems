@@ -6,6 +6,8 @@ public class BusinessRequestDTO {
     private String name;
     private String address;
     private Long cityId; 
+    private String cityName;    // For lazy loading cities
+    private String cityState;   // For lazy loading cities
     private List<Long> categoryIds; 
     private Double latitude;
     private Double longitude;
@@ -67,5 +69,20 @@ public class BusinessRequestDTO {
     public void setWebsite(String website) {
         this.website = website;
     }
-
+    
+    public String getCityName() {
+        return cityName;
+    }
+    
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+    
+    public String getCityState() {
+        return cityState;
+    }
+    
+    public void setCityState(String cityState) {
+        this.cityState = cityState;
+    }
 }

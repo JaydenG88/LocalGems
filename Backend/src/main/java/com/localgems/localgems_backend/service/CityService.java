@@ -1,5 +1,6 @@
 package com.localgems.localgems_backend.service;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import com.localgems.localgems_backend.model.City;
 import com.localgems.localgems_backend.dto.requestDTO.CityRequestDTO;
 import com.localgems.localgems_backend.dto.responseDTO.CityResponseDTO;
@@ -53,6 +54,49 @@ public class CityService {
             cityRepository.deleteById(id);
         } else {
             throw new NoSuchElementException("City not found with id: " + id);
+        }
+    }
+    
+    /**
+     * Get a city by name and state, creating it if it doesn't exist
+     * This implements lazy loading of cities into the database
+     * 
+     * @param name the city name
+     * @param state the state abbreviation
+     * @return the city DTO
+     */
+    @Transactional
+    public CityResponseDTO getOrCreateCity(String name, String state) {
+        if (name == null || state == null) {
+            throw new IllegalArgumentException("City name and state cannot be null");
+        }
+        
+        // Normalize the inputs
+        name = name.trim();
+        state = state.trim().toUpperCase();
+        
+        // Validate state abbreviation (must be 2 characters)
+        if (state.length() != 2) {
+            throw new IllegalArgumentException("State must be a 2-character abbreviation");
+        }
+        
+        // Check if city already exists
+        Optional<City> existingCity = cityRepository.findByNameIgnoreCaseAndStateIgnoreCase(name, state);
+        
+        if (existingCity.isPresent()) {
+            return cityMapper.entityToDto(existingCity.get());
+        } else {
+            // Create new city
+            CityRequestDTO cityRequestDTO = new CityRequestDTO();
+            cityRequestDTO.setName(name);
+            cityRequestDTO.setState(state);
+            
+            City city = cityMapper.dtoToEntity(cityRequestDTO);
+            City savedCity = cityRepository.save(city);
+            
+            System.out.println("Created new city: " + name + ", " + state + " with ID " + savedCity.getCityId());
+            
+            return cityMapper.entityToDto(savedCity);
         }
     }
 }
