@@ -9,6 +9,7 @@ public class GooglePlacesDTO {
     private double longitude;
     private String city;
     private String state;
+    private String website;
     private List<String> categories;
     private Double rating;
     private Integer totalRatings;
@@ -58,6 +59,12 @@ public class GooglePlacesDTO {
     }
     public void setState(String state) {
         this.state = state;
+    }
+    public String getWebsite() {
+        return website;
+    }
+    public void setWebsite(String website) {
+        this.website = website;
     }
     public List<String> getCategories() {
         return categories;

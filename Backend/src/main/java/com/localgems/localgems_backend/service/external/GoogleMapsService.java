@@ -106,29 +106,80 @@ public class GoogleMapsService {
 
     private GooglePlacesDTO mapToGooglePlacesDTO(Map<String, Object> placeDetails) {
         GooglePlacesDTO dto = new GooglePlacesDTO();
-
+        
+        // Basic fields that should always be present
         dto.setPlaceId((String) placeDetails.get("id"));
-        dto.setName((String) ((Map<String, Object> )placeDetails.get("displayName")).get("text"));
-        dto.setAddress((String) ((List<Map<String, Object>>)placeDetails.get("addressComponents")).get(0).get("longText"));
-        dto.setLatitude((Double) ((Map<String, Object>)placeDetails.get("location")).get("latitude"));
-        dto.setLongitude((Double) ((Map<String, Object>)placeDetails.get("location")).get("longitude"));
-        dto.setCity((String) ((List<Map<String, Object>>)placeDetails.get("addressComponents")).get(4).get("longText"));
-        dto.setState((String) ((List<Map<String, Object>>)placeDetails.get("addressComponents")).get(6).get("shortText"));
+        
+        // Handle displayName
+        Map<String, Object> displayName = (Map<String, Object>) placeDetails.get("displayName");
+        if (displayName != null) {
+            dto.setName((String) displayName.get("text"));
+        }
+        
+        // Handle address components - this is more complex as it involves nested structures
+        List<Map<String, Object>> addressComponents = (List<Map<String, Object>>) placeDetails.get("addressComponents");
+        if (addressComponents != null && addressComponents.size() >= 2) {
+            String address = "";
+            if (addressComponents.size() > 0) {
+                address += (String) addressComponents.get(0).get("longText");
+            }
+            if (addressComponents.size() > 1) {
+                address += " " + (String) addressComponents.get(1).get("longText");
+            }
+            dto.setAddress(address);
+            
+            // City and state - be careful with index access
+            if (addressComponents.size() > 4) {
+                dto.setCity((String) addressComponents.get(4).get("longText"));
+            }
+            if (addressComponents.size() > 6) {
+                dto.setState((String) addressComponents.get(6).get("shortText"));
+            }
+        }
+        
+        // Handle location
+        Map<String, Object> location = (Map<String, Object>) placeDetails.get("location");
+        if (location != null) {
+            dto.setLatitude((Double) location.get("latitude"));
+            dto.setLongitude((Double) location.get("longitude"));
+        }
+        
+        // Handle categories, rating and total ratings
         dto.setCategories((List<String>) placeDetails.get("types"));
         dto.setRating((Double) placeDetails.get("rating"));
         dto.setTotalRatings((Integer) placeDetails.get("userRatingCount"));
-        dto.setEditorialSummary((String)((Map<String, String>) placeDetails.get("editorialSummary")).get("text"));
-
-        List<Map<String, Object>> reviewsRaw = (List<Map<String, Object>>) placeDetails.get("reviews");
-        List<String> reviewText = new ArrayList<>();
-
-        for (Map<String, Object> review : reviewsRaw) {
-            reviewText.add((String)((Map<String, String>) review.get("text")).get("text"));
+        
+        // Handle potential null editorialSummary
+        Map<String, String> editorialSummary = (Map<String, String>) placeDetails.get("editorialSummary");
+        if (editorialSummary != null) {
+            dto.setEditorialSummary(editorialSummary.get("text"));
+        } else {
+            dto.setEditorialSummary(null);
         }
+        
+        // Handle websiteUri which might be null
+        dto.setWebsite((String) placeDetails.get("websiteUri"));
 
+        // Handle potential null reviews
+        List<String> reviewText = new ArrayList<>();
+        List<Map<String, Object>> reviewsRaw = (List<Map<String, Object>>) placeDetails.get("reviews");
+        
+        if (reviewsRaw != null) {
+            for (Map<String, Object> review : reviewsRaw) {
+                Map<String, String> textMap = (Map<String, String>) review.get("text");
+                if (textMap != null) {
+                    reviewText.add(textMap.get("text"));
+                }
+            }
+        }
+        
         dto.setReviewSnippets(reviewText);
 
         return dto;
     }
 
+
+
 }
+
+
