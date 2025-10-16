@@ -1,4 +1,4 @@
-# LocalGems (WIP)
+# LocalGems (On Pause)
 
 LocalGems aims to be a platform where users can easily share and discover local and niche shops in their area or while traveling on vacation.
 
