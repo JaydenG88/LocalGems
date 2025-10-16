@@ -14,6 +14,7 @@ import com.localgems.localgems_backend.dto.responseDTO.CityResponseDTO;
 import com.localgems.localgems_backend.repository.ReviewRepository;
 import com.localgems.localgems_backend.model.Review;
 import com.localgems.localgems_backend.service.external.GoogleMapsService;
+import com.localgems.localgems_backend.service.external.OpenAIService;
 
 import java.util.*;
 
@@ -27,6 +28,7 @@ public class BusinessService {
     private final CategoryRepository categoryRepository;
     private final ReviewRepository reviewRepository;
     private final GoogleMapsService googleMapsService;
+    private final OpenAIService openAIService;
 
     public BusinessService(
             BusinessRepository businessRepository, 
@@ -35,7 +37,8 @@ public class BusinessService {
             CityService cityService,
             CategoryRepository categoryRepository, 
             ReviewRepository reviewRepository, 
-            GoogleMapsService googleMapsService) {
+            GoogleMapsService googleMapsService,
+            OpenAIService openAIService) {
         this.businessRepository = businessRepository;
         this.businessMapper = businessMapper;
         this.cityRepository = cityRepository;
@@ -43,9 +46,10 @@ public class BusinessService {
         this.categoryRepository = categoryRepository;
         this.reviewRepository = reviewRepository;
         this.googleMapsService = googleMapsService;
+        this.openAIService = openAIService;
     }
 
-    public GooglePlacesDTO submitBusiness(String businessName, String address, String city, String state) {
+    public BusinessResponseDTO submitBusiness(String businessName, String address, String city, String state) {
         String search = businessName + ", " + address + ", " + city + ", " + state;
         GooglePlacesDTO placesDto = googleMapsService.getPlaceDetailsBySearch(search);
         if (placesDto == null) {
@@ -63,13 +67,13 @@ public class BusinessService {
                 System.err.println("Warning: Could not process city: " + e.getMessage());
             }
         }
-        
-        // Unfinished until AI functionality is added
-        // Pseudo code:
-        // BusinessRequestDTO requestdto = openaiValidation(placesDetailsDTO) // validation is done inside openaiValidation
-        // BusinessResponseDTO responseDTO = createBusiness(requestdto)
-        
-        return placesDto;
+
+         BusinessRequestDTO businessRequestDTO = openAIService.generateBusinessRequestDTO(placesDto);
+            if (businessRequestDTO != null) {
+                return createBusiness(businessRequestDTO);
+            } else {
+                throw new RuntimeException("Failed to generate BusinessRequestDTO from OpenAI");
+            }
     }
 
     public BusinessResponseDTO createBusiness(BusinessRequestDTO businessRequestDTO) {

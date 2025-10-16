@@ -13,5 +13,21 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+  backend:
+    build: .
+    container_name: localgems-backend
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/localgems
+      SPRING_DATASOURCE_USERNAME: localgems_user
+      SPRING_DATASOURCE_PASSWORD: secret
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      GOOGLE_API_KEY: ${GOOGLE_API_KEY}
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+
+
 volumes:
   postgres_data:

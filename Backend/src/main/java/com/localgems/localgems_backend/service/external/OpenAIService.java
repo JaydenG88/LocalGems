@@ -310,7 +310,6 @@ public class OpenAIService {
 
         return prompt.toString();
     }
-    
 
 
 }

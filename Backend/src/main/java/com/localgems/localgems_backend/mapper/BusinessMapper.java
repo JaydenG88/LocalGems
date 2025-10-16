@@ -11,8 +11,6 @@ import com.localgems.localgems_backend.dto.responseDTO.CategoryResponseDTO;
 
 @Mapper(componentModel = "spring")
 public interface BusinessMapper {
-    // We don't need this instance when using Spring component model
-    // public static final BusinessMapper INSTANCE = Mappers.getMapper(BusinessMapper.class);
 
     Business dtoToEntity(BusinessRequestDTO dto);
 

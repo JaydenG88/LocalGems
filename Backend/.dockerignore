@@ -1,0 +1,8 @@
+target/
+.git
+.gitignore
+.vscode/
+.idea/
+*.iml
+**/node_modules
+**/.m2

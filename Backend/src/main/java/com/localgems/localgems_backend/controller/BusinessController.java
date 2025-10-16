@@ -115,15 +115,7 @@ public class BusinessController {
         @RequestParam String city,
         @RequestParam String state
     ) {
-        try {
-            GooglePlacesDTO placesDto = businessService.submitBusiness(businessName, address, city, state);
-            return new ResponseEntity<>(placesDto, HttpStatus.OK);
-        } catch (NoSuchElementException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        return null;
     }
 
     @PutMapping("/{id}")
