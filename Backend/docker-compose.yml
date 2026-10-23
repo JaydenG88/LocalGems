@@ -28,6 +28,13 @@ services:
       - "8080:8080"
     restart: unless-stopped
 
+  ml-service:
+    build: ../ml-service
+    container_name: localgems-ml-service
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+
 
 volumes:
   postgres_data:
